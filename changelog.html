@@ -1,0 +1,728 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Change Log of the Remote Tea Package</title>
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+    <meta name="author" content="Harald Albrecht">
+    <link rel="stylesheet" type="text/css" href="docstyle.css">
+  </head>
+  <body>
+
+
+<p class="revision">CVS info:
+$Revision$ $Date$ $State$ $Locker$</p>
+
+<h1>Change Log <q>Remote Tea</q></h1>
+
+<p><a class="ext" href="http://remotetea.sourceforge.net">Remote Tea
+Project Home Page</a> on SourceForge.</p>
+
+<h2>Version 1.0.3:</h2>
+
+<p>This release marks my movement from the website of the good old
+Chair of Process Control Engineering to Sourceforge. Since
+<q>Remote Tea</q> has now quite some users, it was time to put the
+project on its own feet. Let's see where this will lead to.</p>
+
+<ul>
+
+  <li><span>With my transition from JBuilder to Eclipse a little bit
+  of rearrangement of a few files was necessary. In particular, the
+  old JBuilder project files are gone down the bit bucket, so say
+  <q>hello</q> to the new Eclipse project files. With the switch to
+  Eclipse we now have a <em>free</em> IDE for a <em>free</em> ONC/RPC
+  package &#x96; and if you use ClassPath and an appropriate VM, then
+  the whole thing is <em>free</em>.</span></li>
+
+  <li><span>Updated documentation &#x96; but you will probably already
+  have noticed that from the new style of this and the other HTML
+  files.</span></li>
+
+  <li><span>Yet another small correction to <span
+  class="product">jrpcgen</span>: it does not emit unnecessary import
+  statements anymore. This silences especially the
+  <q>Eclipse</q> IDE, but also other <q>smart asses</q>.</span></li>
+
+</ul>
+
+<h2>Version 1.0.2:</h2>
+<ul>
+
+  <li><span>Fixed a bug in <span class="product">jrpcgen</span>, which
+  caused the automatically generated constructor in server stubs,
+  which accepts a port number, to ignore this port number.</span></li>
+
+  <li><span>Also squashed a bug which caused problems when definitions
+  from enumerations where used as program numbers.</span></li>
+
+  <li><span>Small <q>todo</q> work done, so that <span
+  class="product">jrpcgen</span> now emits more useful information in
+  the javadoc tags for remote procedure parameters and
+  results.</span></li>
+
+  <li><span>Removed old and useless code from <span
+  class="product">jrpcgen</span> that has alread been commented out
+  for quite some time.</span></li>
+
+  <li><span>Added new parameter <span class="arg">-withcallinfo</span>
+  to <span class="product">jrpcgen</span>. When specified on the
+  command line, <span class="product">jrpcgen</span> emits server
+  method stubs which contain always as their first parameter an
+  additional parameter holding information about the remote call
+  itself.  This can be used, for instance, for authentication
+  purposes, et cetera.  The parameter is always named
+  <code>call$</code> and of type
+  <code>OncRpcCallInformation</code>.</span></li>
+
+  <li><span>Added new parameter <span class="arg">-noclamp</span> to
+  <span class="product">jrpcgen</span>. When <span
+  class="arg">-noclamp</span> is specified on the command line, <span
+  class="product">jrpcgen</span> emits client method stubs which use
+  the version number specified when creating the client object at
+  runtime. When this option is not given, <span
+  class="product">jrpcgen</span> defaults to the current behavior and
+  uses the version number as specified in the x-file.</span></li>
+
+</ul>
+
+<h2>Version 1.0.1:</h2>
+<ul>
+
+  <li><span>Fixed a bug in <span class="product">jrpcgen</span>, which
+  emitted wrong stub code when a remote function contained more than
+  one parameter: in this case, enumerations were not properly coerced
+  to integers (thanks to Michael Smith for pointing this out and at
+  the same time supplying the patch).</span></li>
+
+  <li><span>Fixed another bug in <span class="product">jrpcgen</span>,
+  which resulted in some (enumeration) constants not being
+  dumped.</span></li>
+
+</ul>
+
+
+<h2>Version 1.0.0:</h2>
+<ul>
+
+  <li><span>Tired of all the pre-1.0 releases in the past two years, I
+  finally decided to go straight to the official 1.0 release. The past
+  releases were primarily aiming at feature completeness to some
+  degree, while the real basic parts were quite stable (with few
+  improvements and bug fixes) over time. So, ... <b>we have reached
+  1.0!</b> ...and will probably soon get to 1.0.x, sigh.</span></li>
+
+  <li><span>For XDR structs with tail references to themselves, <span
+  class="product">jrpcgen</span> now emits serialization and
+  deserialization code which uses an iteration loop instead of tail
+  recursion. The benefit of this is that the call stack usage is
+  considerably reduced. Of course, this optimization can only be
+  applied if the reference to the same type is the <em>last</em>
+  element of the structure.</span></li>
+
+  <li><span>Corrected a race condition, which sometimes caused the
+  listening TCP thread in ONC/RPC servers to die with
+  <code>NullPointerExceptions</code>. Many thanks to Michael Smith for
+  hunting down this one. Classes concerned are
+  <code>OncRpcTcpConnectionServerTransport</code>,
+  <code>OncRpcTcpServerTransport</code> and
+  <code>OncRpcUdpServerTransport</code>.</span></li>
+
+  <li><span><span class="product">jrpcgen</span> now exits the VM with
+  a non-zero return code in case it was called through its static
+  <code>main</code> and <span class="product">jrpcgen</span> stumbled
+  on an error. This allows <span class="product">jrpcgen</span> to be
+  used in classic make projects. The Apache Ant is not affected by
+  this behavior.</span></li>
+
+  <li><span>Added an additional constructor to the classes
+  <code>OncRpcTcpServerTransport</code> and
+  <code>OncRpcUdpServerTransport</code>. It accepts now a local
+  binding address.  The server socket is then bound only to this/these
+  local address(es).  In addition, <span
+  class="product">jrpcgen</span> now emits source code for server
+  stubs with an additional constructor which accepts the additional
+  binding address.</span></li>
+
+</ul>
+
+<h2>Version 0.95.2:</h2>
+<ul>
+
+  <li><span>Small change in
+  <code>OncRpcTcpSocketHelper.connect()</code> to accept a negative
+  timeout that signals to use the particular implementation-specific
+  timeout value.</span></li>
+
+  <li><span>Added new constructor to <code>OncRpcTcpClient</code>,
+  which accepts a timeout parameter (in milliseconds) as its last
+  argument. This constructor can be used to limit the connection
+  attempt period and finally makes the timeout functionality available
+  which has been implemented in the 0.95.1 release.  It is important
+  to note that the timeout specified as the parameter to the
+  constructor does not apply to later ONC/RPC calls. These are
+  controlled as usual through the existing timeout-related
+  accessors.</span></li>
+
+  <li><span>Made <code>OncRpcPortmapClient</code> a stand-alone class,
+  which is not derived from <code>OncRpcUdpClient</code> any
+  more. This now allows applications to contact the portmapper either
+  using UDP/IP or TCP/IP (HTTP not yet supported).</span></li>
+
+  <li><span>Bumped up the versioning information in
+  <code>OncRpcConstants</code> (I had forgotten to do so for the
+  previous releases...).</span></li>
+
+</ul>
+
+<h2>Version 0.95.1:</h2>
+
+<p>After a long time (and a Ph.D. thesis on metamodelling for
+communication in operational process control engineering now written
+and on its way) I've finally managed to get a new RemoteTea release
+out of the door.</p>
+
+<ul>
+
+  <li><span>Implemented timeout-controlled connects for TCP-based
+  ONC/RPC clients.  The whole thing is a little bit tricky in view of
+  pre-1.4&nbsp;JREs. However, I definitely want to support
+  JDK&nbsp;1.2 and 1.3 (so much for write once, forget
+  everywhere).
+
+  <p>The socket helper object features a <code>connect</code> method
+  which can execute timeout-controlled connection establishment. In
+  case the current VM Remote Tea is running on does not provide a
+  proper implementation, Remote Tea resorts to the following
+  algorithm:</p>
+
+  <ul>
+
+    <li><span>The <code>connect</code> method creates a new thread
+    which in turn tries to connect to the given port at the given host
+    (an instance of the local class <code>Connectiator</code> is
+    responsible for this).</span></li>
+
+    <li><span>The original thread initiating the Connectiator thread
+    now waits for it to finish, but no longer than the timeout
+    specified in the call to the <code>connect</code> method. In case
+    the Connectiator does not succeed within the timeout period, an
+    <code>IOException</code> is thrown by the <code>connect</code>
+    method.</span></li>
+
+    <li><span>The Connectiator object will signal itself in case it
+    succeeded, but also if it failed. Its <code>getIOException</code>
+    method then either returns <code>null</code> or an
+    <code>IOException</code>.</span></li>
+
+  </ul>
+
+  </span></li>
+
+  <li><span>Fixed deserializing bug in
+  <code>XdrDecodingStream.xdrDecodeLong()</code>, where unwanted sign
+  extension messed up 64&nbsp;bit wide integers (XDR hypers).</span></li>
+
+  <li><span>Fixed a long-standing <q>feature</q> in
+  <code>XdrTcpDecodingStream.fill()</code>, which caused invalid
+  header decoding if the fragment length was larger than
+  2<sup>27</sup>.</span></li>
+
+  <li><span>Fixed sanity checks for those ONC/RPC partners sending
+  empty XDR fragments as last fragments of XDR records &#x96; a trailing
+  last XDR fragment that carries no data is now accepted. The fix
+  concerns the class <code>XdrTcpDecodingStream</code> semantics of
+  the <code>fill</code> method were slightly changed to return also in
+  case of empty trailing record (<code>lastFragment</code> attribute
+  must be <code>true</code>). All methods directly calling
+  <code>fill</code> have been adapted (at least I hope
+  so).</span></li>
+
+  <li><span>Improved handling of wrong or mismatching ONC/RPC messages
+  for UDP-based ONC/RPC clients. They do not emit new calls any more
+  when receiving replies from wrong sources and keep quiet instead
+  until the timeout expires (as per current timeout
+  strategy).</span></li>
+
+  <li><span>Fixed some buffer offset bugs (forgot to take care of CRLF
+  at one place) in <code>XdrHttpDecodingStream</code>, for which
+  patches were kindly offered by the austrian internet
+  chamoises.</span></li>
+
+  <li><span>Added Ant task for <Span Class="Product">jrpcgen</Span> as
+  <code>org.acplt.oncrpc.ant.JrpcgenTask</code>, kindly provided by
+  Jean-Francois Daune.  This also involved some small changes to <span
+  class="product">jrpcgen</span> in order to make it available as a
+  task.</span></li>
+
+</ul>
+
+
+<h2>Version 0.94.2:</h2>
+<ul>
+
+  <li><span>Fixed bug in <span class="product">jrpcgen</span>, which
+  caused a crash when hashing a union's structure (needed to create
+  serial version UIDs) and the union contained a non-empty default
+  arm. Also added appropriate
+  <q>test case</q> to <code>demo.x</code>.</span></li>
+
+</ul>
+
+
+<h2>Version 0.94.1:</h2>
+<ul>
+
+  <li><span>Added two new code generation options to <span
+  class="product">jrpcgen</span>:
+
+  <ul>
+
+    <li><span><span class="arg">-ser</span>: tag classes generated for
+    XDR structs, XDR unions and XDR typedefs as serializable. Also
+    automatically generates <code>serialVersionUID</code> using the
+    SHA-1 algorithm. (My thanks to the <a class="ext"
+    href="http://www.classpath.org">GNU classpath</a> project for
+    providing the SHA-1 algorithm, please see
+    <code>Jrpcgen.SHA.java</code> for license details).</span></li>
+
+    <li><span><span class="arg">-initstrings</span>: automatically
+    initialize all <code>Strings</code> as empty strings (""). Note
+    that this may lead to lazy programming; better make explicitly
+    sure that every member of a struct gets initialized properly
+    before encoding the struct.</span></li>
+
+  </ul>
+  </span></li>
+
+</ul>
+
+
+<h2>Version 0.93.1:</h2>
+<ul>
+
+  <li><span>Once more fixed support for JDK&nbsp;1.1 for Java-based
+  ONC/RPC servers: the old code still used a LinkedList, which is only
+  available since JDK&nbsp;1.2.  So I added a minimalist double linked
+  list local class (it's in
+  <code>OncRpcTcpServerTransport.TransportList</code>).</span></li>
+
+  <li><span>Worked around some broken JDKs&nbsp;1.1 (especially on
+  AIX, but I have also heard of problems on Linux), which have broken
+  <code>InetAddress.getLocalHost</code>. The code now uses
+  <code>InetAdress.getByName("127.0.0.1")</code>. Yeah, write once,
+  does not work anywhere.</span></li>
+
+  <li><span>Added overloaded <code>client.call</code> method which
+  expects an additional (procedure/protocol) version number as its
+  second argument. This method is necessary so several versions can
+  coexists peacefully in one client and can be called
+  simultaneously. As before, if you do not specify a version in the
+  call to <code>client.call</code> the <q>default</q> version is used
+  as specified in the constructor. Please note that
+  <code>OncRpcClient</code>-derived classes must now implement the
+  overloaded <code>call</code> method expecting four parameters:
+  procedure number, version number, parameters, and result (this only
+  applies to those who want to implement their own ONC/RPC clients for
+  different transports than those already provided).</span></li>
+
+  <li><span>Added support for multiple parameters in procedure
+  declarations within x-files, to be more in sync with newer rpcgen
+  releases. In addition, <span class="product">jrpcgen</span> now also
+  accept named parameters in remote procedure declarations. Both
+  enhancements caused quite some changes in the code emitting parts of
+  <span class="product">jrpcgen</span>: local wrapper classes are used
+  to serialize and deserialize multiple parameters.</span></li>
+
+</ul>
+
+
+<h2>Version 0.92.1:</h2>
+<ul>
+
+  <li><span>Support for batched ONC/RPC calls when using TCP-based
+  transports: see OncRpcTcpClient.batchCall() for more
+  information.</span></li>
+
+  <li><span>Added support for handling multiple ONC/RPC programs
+  and/or versions through the same server transport.</span></li>
+
+  <li><span><span class="product">jrpcgen</span> now emits a second
+  constructor expecting the port number to bind transports to as its
+  solely parameter. This allows server writers to bind their servers
+  to well-known ports.</span></li>
+
+  <li><span>Added a jportmap and an embedded portmap
+  service class.  It can be used by standalone applications which
+  should also be useable if the user has not installed a portmap
+  service.  I must have been bored or insane. Or both.</span></li>
+
+  <li><span>Made several <code>OncRpcServerStub</code> methods public
+  (instead of protected), to give derived server classes more control
+  over the way they spin up and down.</span></li>
+
+</ul>
+
+
+<h2>Version 0.91.2:</h2>
+<ul>
+
+  <li><span>Ashes on my head for releasing 0.91.1 with a really dumb
+  bug related to JDK&nbsp;1.1 backwards compatibility which broke JDK2
+  compatibility completely.  When using reflection one can not call
+  the superclass' methods for obvious reasons, so an endless recursion
+  occured in <code>OncRpcTcpSocket</code>. So much for almost not
+  testing the release. To fix this stupid design bug the classes
+  <code>OncRpcTcpSocket</code> and <code>OncRpcUdpSocket</code> were
+  moved to <code>OncRpcTcpSocketHelper</code> and
+  <code>OncRpcUdpSocketHelper</code>. They now merely support
+  <code>Socket</code> and <code>DatagramSocket</code> instead of
+  inheriting from them. This avoids the endless reflection method
+  invocation loop, but is still cheaper in terms of method invocation
+  performance than a wrapper class.</span></li>
+
+  <li><span>Fixed missing JDK&nbsp;1.1
+  compatibility for the server classes.</span></li>
+
+</ul>
+
+<h2>Version 0.91.1:</h2>
+<ul>
+
+  <li><span>Fixed a deserialization bug with <code>AUTH_NONE</code> on
+  the server side in <code>OncRpcServerAuth.xdrNew</code> when
+  recycling the <code>AUTH_NONE</code> handler singleton.</span></li>
+
+  <li><span>Removed automatic startup from the constructor of <span
+  class="product">jrpcgen</span> generated server stubs. The
+  constructor of a server stub class now only creates the transport
+  objects and sets the public <code>transports</code> field within
+  class <code>OncRpcServerStub</code>. Registering with the portmapper
+  as well as dispatching calls is now done within the
+  <code>run()</code> method (note: without any parameters). You need
+  to change your code accordingly by inserting a call to
+  <code>run()</code>, otherwise the server will not start.
+
+  <pre>
+    MyServer myserver = new MyServer();
+    myserver.run();
+  </pre>
+  </span></li>
+
+  <li><span>Preparations for cvs check-in: in order to handle
+  individual Java projects in form of cvs submodules within the
+  toplevel cvs module <q>java</q>, some files were moved. The JBuilder
+  project files have been moved to the <code>projects/</code>
+  subdirectory.</span></li>
+
+  <li><span>Fixed problem with <span class="product">jrpcgen</span>
+  emitting constants which depend on other constants in wrong
+  order. Constants which are needed by other constant definitions are
+  now emitted first. In case an enumeration element depends on a
+  global constant (or for some reason on another enumeration element),
+  then the enclosure is taken into account too. The
+  <code>demo.x</code> example now tests some pathological
+  cases.</span></li>
+
+  <li><span>Added backward support for JDK&nbsp;1.1. While I'm not
+  very proud of it, many people requested this as quite some companies
+  use the bug-ridden MS&nbsp;InternetExploder with its very own
+  JVM. Changes include using <code>addElement</code> instead of
+  <code>add</code> when adding objects to a
+  <code>Vector</code>.</span></li>
+
+  <li><span>Moved the readme documentation into its own directory
+  <code>readme-first/</code> which should be more obvious to
+  first-time users of the RemoteTea source code and does not clobber
+  the <code>projects/</code> directory any more.</span></li>
+
+  <li><span>Fixed <code>NullPointerException</code> in
+  <code>OncRpcTcpClient</code> and <code>OncRpcUdpClient</code> when
+  checking for rejected credentials &#x96; and I thought Java had no
+  pointers.</span></li>
+
+  <li><span><span class="product">jrpcgen</span>: support for short
+  form <code>unsigned</code> in addition to <code>unsigned int</code>
+  (compatibility with <code>rpcgen</code>). Handling of octal numbers
+  added (okay, it is still a valid number format). Fixed bug in the
+  code generation of desciminated unions using booleans. Support for
+  more than one program definition within the same x-file.  In this
+  case the source code files generated for the client and server stubs
+  are named
+  <i>&lt;x-filename&gt;&lt;program-id&gt;</i><code>Client.java</code>
+  and
+  <i>&lt;x-filename&gt;&lt;program-id&gt;</i><code>Server.java</code>,
+  respectively.</span></li>
+
+  <li><span>First rough cut for tunneling ONC/RPC client calls through
+  HTTP connections. On the other end, you will need the <q>Tea
+  Tunnel</q> Apache DSO module, which <q>untunnels</q> calls and
+  forwards them to the appropriate ONC/RPC server using direct TCP/IP
+  or UDP/IP connections (or non-connections in the case of
+  UDP/IP).</span></li>
+
+  <li><span>Added new package <code>org.acplt.oncrpc.web</code>
+  containing helper classes for HTTP client connections
+  (<code>HttpClientConnection</code>), and base64 encoding and
+  decoding (<code>Base64</code>), as well as some other
+  stuff.</span></li>
+
+  <li><span>Added new class <code>OncRpcHttpClient</code>, which
+  stands in the tradition of <code>OncRpcClient</code> and implements
+  sending ONC/RPC calls through HTTP tunnels. Also added
+  <code>XdrHttpDecodingStream</code>, which can pull base64 encoded
+  data from a web server and provide the decoded data through the
+  usual decoding XDR stream interface.</span></li>
+
+</ul>
+
+
+<h2>Version 0.90.1:</h2>
+<ul>
+
+  <li><span>Fixed
+  <code>XdrEncodingStream.xdrEncodeByteFixedVector()</code> which
+  falsely encoded length information about the following array of
+  characters.  I should take more care when doing <code>Italian code
+  recycling</q> using copy &amp; pasta...</span></li>
+
+  <li><span>Fixed bug in <code>OncRpcTcpClient.call()</code> which
+  caused XDR buffer underflows when receiving the next reply after the
+  previous reply has been rejected by an ONC/RPC server.</span></li>
+
+  <li><span>Updated package.html for package
+  <code>org.acplt.oncrpc</code> to put it in sync with (de-)
+  serializing fixed-size vectors and dynamic and fixed vectors of
+  characters.</span></li>
+
+  <li><span>Added <code>AUTH_UNIX</code> authentication. For this to
+  achieve quite some additions and changes were necessary &#x96;
+  luckily, old applications will not be broken, as the changes are
+  deep within the RemoteTea package:
+
+  <ul>
+
+    <li><span>See OncRpcClient for a description about how to use
+    authentication with ONC/RPC clients.</span></li>
+
+    <li><span>For handling of client-side authentication issues, the
+    classes <code>OncRpcClientAuth</code>,
+    <code>OncRpcClientAuthNone</code> and
+    <code>OncRpcClientAuthUnix</code> were added.</span></li>
+
+    <li><span>The ONC/RPC call and reply message classes
+    <code>OncRpcReplyMessage</code> and <code>OncRpcCallMessage</code>
+    are now both abstract. This was necessary because ONC/RPC protocol
+    issues make it necessary to handle authentication through
+    so-called authentication protocol handling objects different on
+    the client side than on the server side.  Additional classes now
+    handle sending calls and receiving replies on the client side
+    (<code>OncRpcClientCallMessage</code> and
+    <code>OncRpcClientReplyMessage</code> respectively), as well as on
+    the server side (<code>OncRpcServerCallMessage</code> and
+    <code>OncRpcServerReplyMessage</code>). According to their needs,
+    these new classes only declare those encoding and decoding methods
+    which are really needed. In consequence, the base class
+    <code>OncRpcCallMessage</code> has lost its <code>XdrAble</code>
+    interface completely.</span></li>
+
+    <li><span>Added authentication handling and credential refreshing
+    to <code>OncRpcUdpClient</code> and <code>OncRpcTcpClient</code>,
+    as well as to the base class
+    <code>OncRpcClient</code>.</span></li>
+
+    <li><span>Added authentication protocol handling to ONC/RPC
+    transports. If servers want to take advantage of authentication,
+    they need to look at the <code>callMessage.auth</code> attribute
+    of the <code>OncRpcCallInformation</code> delivered with each
+    incomming ONC/RPC call. See
+    <code>tests.org.acplt.oncrpc.ServerTest.java</code> for an
+    example.</span></li>
+
+  </ul>
+
+  Please note that <code>AUTH_DES</code> is still not supported, as
+  this needs quite some things to be done and I don't have full
+  information about the <code>AUTH_DES</code> protocol.
+
+  </span></li>
+
+  <li><span>Added new classes <code>XdrBufferEncodingStream</code> and
+  <code>XdrBufferDecodingStream</code> for encoding and decoding XDR
+  data from and to a fixed-size buffer. These classes comes in handy
+  when dealing with shorthand credentials.</span></li>
+
+  <li><span>Added class <code>XdrDynamicOpaque</code> to handle
+  variable-sized vectors of bytes.</span></li>
+
+  <li><span>Moved the <span class="product">jrpcgen</span> package to
+  <code>org.acplt.oncrpc.apps.jrpcgen</code>, because it's an
+  application belonging very tight to ONC/RPC.</span></li>
+
+  <li><span>Added new
+  <code>OncRpcConstants.REMOTETEA_VERSION_PREVERSION</code>, which
+  indicates preversions if not zero.</span></li>
+
+</ul>
+
+
+<h2>Version 0.86.1:</h2>
+<ul>
+
+  <li><span>As Sun's rpcgen encodes <code>char&lt;></code> as a
+  series of characters, each one sitting happily in its very own XDR
+  int (that is, four bytes), the two methods
+  <code>XdrDecodingStream.xdrDecodeBytes()</code> and
+  <code>XdrEncodingStream.xdrEncodeBytes()</code> were renamed to
+  <code>XdrDecodingStream.xdrDecodeByteVector()</code> and
+  <code>XdrEncodingStream.xdrEncodeByteVector()</code> as well as
+  their semantics changed accordingly.</span></li>
+
+  <li><span>Added methods
+  <code>XdrDecodingStream.xdrDecodeDynamicOpaque()</code>,
+  <code>XdrEncodingStream.xdrEncodeDynamicOpaque()</code>,
+  <code>XdrDecodingStream.xdrDecodeByteFixedVector()</code> and
+  <code>XdrEncodingStream.xdrEncodeByteFixedVector()</code>.</span></li>
+
+  <li><span>Fixed <span class="product">jrpcgen</span> accordingly, so
+  it generates proper code for arrays of bytes and opaque data types
+  accordingly.</span></li>
+
+  <li><span>Made all non-abstract encoding and decoding methods in
+  <code>XdrDecodingStream</code> and <code>XdrEncodingStream</code>
+  finally <code>final</code>. Maybe this helps Java compilers improve
+  code speed. Maybe.</span></li>
+
+  <li><span>Fixed <span class="product">jrpcgen</span> code generation
+  error when the size of an array was specified using a constant
+  identifier. Now <span class="product">jrpcgen</span> properly
+  references the constant from the x-file's main class.</span></li>
+
+  <li><span>Fixed some documentation errors for
+  <code>XdrDecodingStream</code> and
+  <code>XdrEncodingStream</code>.</span></li>
+
+</ul>
+
+
+<h2>Version 0.85.1:</h2>
+<ul>
+
+  <li><span>Added new method <code>readBuffer()</code> to class
+  <code>XdrTcpDecodingStream</code>. This fixes problems when reading
+  from a TCP/IP stream and not all bytes wanted are immediately
+  available, thus <code>stream.read()</code> returning not all bytes
+  at once (shame on me for not reading the java.io documentation
+  attentive enough).</span></li>
+
+</ul>
+
+
+<h2>Version 0.84.1:</h2>
+<ul>
+
+  <li><span>Added control over the retransmission strategy used by
+  UDP/IP-based ONC/RPC clients. The default strategy is now not to
+  resend lost ONC/RPC calls (retransmission timeout is set to the
+  overall timeout). Either a fixed retransmission timeout can be
+  choosen, where lost calls are resend every &lt;retransmission
+  timeout> milliseconds, or an exponential back-off alogorithm. The
+  exponential scheme starts with the retransmission timeout and
+  doubles it every time a call is lost, until the overall timeout is
+  reached.</span></li>
+
+  <li><span>Added two more constructors to ONC/RPC clients generated
+  by <span class="product">jrpcgen</span> from x-files. These
+  constructors now also accept the remote program number, so
+  application writers gain full control.</span></li>
+
+</ul>
+
+
+<h2>Version 0.83.1:</h2>
+<ul>
+
+  <li><span>Fixed support for indirection in decriminated unions. Also
+  cleaned up some minor things related to constants and
+  enumerations. Thanks to Ulrik Sandberg for throwing all kinds of
+  vicious x-files at <span class="product">jrpcgen</span>.</span></li>
+
+</ul>
+
+
+<h2>Version 0.82.1:</h2>
+<ul>
+
+  <li><span>Added support for indirection in x-files, also called
+  <q>optional data</q> in ONC/RPC babble. Also added a new test case
+  to the demo.x file.</span></li>
+
+</ul>
+
+
+<h2>Version 0.81.1:</h2>
+<ul>
+
+  <li><span>Added broadcasting of ONC/RPC calls to UDP/IP-based
+  ONC/RPC clients through the new <code>broadcastCall</code> of method
+  in class <code>OncRpcUdpClient</code>.</span></li>
+
+  <li><span>Added helper methods for encoding and decoding fixed-size
+  vectors for various base data types.</span></li>
+
+  <li><span>Added a description about mapping rpcgen (RFC&nbsp;1832)
+  data types to Java data type.</span></li>
+
+  <li><span>Added an RPC protocol compiler named <span
+  class="product">jrpcgen</span>. Sun's documentation on the rpcgen
+  syntax and grammar is rather thin and sometimes inaccurate. As
+  always, I had to resort to RTSL (<q>Read The Source, Luke!</q>) to
+  find out what syntax and grammar rpcgen does in fact use. Please
+  give it a try and report problems. Note that there is no
+  preprocessor step.</span></li>
+
+</ul>
+
+
+<h2>Version 0.80.2:</h2>
+<ul>
+
+  <li><span>Fixed a buffer underflow exception in XdrUdpDecodingStream
+  in methods <code>xdrDecodeOpaque(int)</code> and
+  <code>xdrDecodeOpaque(byte[],int,int)</code>. This cures the bug
+  where a XDR string being the last piece of information in a RPC call
+  or reply could not be read successfully.</span></li>
+
+  <li><span>Added <code>org.acplt.oncrpc.OncRpcConstants</code>, which
+  contains versioning information.</span></li>
+
+</ul>
+
+
+<h2>Version 0.80.1:</h2>
+<ul>
+
+  <li><span>Separated the ONC/RPC package under the name <q>Remote
+  Tea</q> from the ACPLTea package. As the ONC/RPC implementation is
+  pretty functional the version number was changed to reflect
+  this.</span></li>
+
+  <li><span>Added XDR primitive and serializable data types for
+  strings, floats, etc.</span></li>
+
+</ul>
+
+
+<h2>Version 0.35.1 and before:</h2>
+<ul>
+
+  <li><span>Graciously hidden in the mist of history (probably also in
+  the midst of history). The Remote Tea package was then only
+  available together with the ACPLTea package, but not
+  separate.</span></li>
+
+</ul>
+
+  </body>
+</html>
+<!-- End of changelog.html -->
+
