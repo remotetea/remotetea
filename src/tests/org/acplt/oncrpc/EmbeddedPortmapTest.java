@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.net.*;
 
 import org.acplt.oncrpc.*;
-import org.acplt.oncrpc.server.*;
 import org.acplt.oncrpc.apps.jportmap.*;
 
 
@@ -105,7 +104,7 @@ public class EmbeddedPortmapTest {
         // Check that an embedded portmap service spins down properly if it
         // was started within this test.
         //
-        if ( epm.isPortmapRunning() && !externalPortmap ) {
+        if ( OncRpcEmbeddedPortmap.isPortmapRunning() && !externalPortmap ) {
             System.out.println("ERROR: embedded portmap service still running.");
         }
     }
