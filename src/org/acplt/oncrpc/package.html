@@ -1,0 +1,370 @@
+<html>
+<head>
+<title>ONC/RPC for Java package</title>
+</head>
+<body>
+
+Sun's ONC/RPC Remote Procedure Call mechanism.
+
+<p>This package implements Sun's ONC/RPC Remote Procedure Call specification
+(see RFC&nbsp;1831, RFC&nbsp;1832, RFC&nbsp;1833).
+
+<p>Functionality currently supported:
+
+<ul>
+<li>RPC calls over TCP/IP as well as UDP/IP.
+
+<li>RPC <a href="OncRpcClient.html">client</a> functionality.
+
+<li>RPC server functionality (see package
+<a href="server/package-summary.html">org.acplt.oncrpc.server</a>).
+
+<li>Querying the ONC/RPC <a
+href="OncRpcPortmapClient.html">portmapper</a>.
+
+<li><a href="apps/jrpcgen/package-summary.html">jrpcgen-utility</a>
+for converting x-files into Java classes.
+
+<li>Support for authentication types <code>AUTH_NONE</code>,
+<code>AUTH_UNIX</code> and <code>AUTH_SHORT</code> on both the
+<a href="OncRpcClientAuth.html">client</a> and the
+<a href="server/OncRpcServerAuth.html">server</a> side.
+
+</ul>
+
+<p>To manually convert x-files into serializable Java classes, first map
+the primitive rpcgen data types (and thus the data types described in
+RFC&nbsp;1832 to some extend) onto Java's primitive data types. The following
+table should help you doing this.
+
+<table border=1 cellpadding=2 cellspacing=1>
+<tr><td colspan=2 align="center"><b>rpcgen / RFC&nbsp;1832</b></td><td colspan=3 align="center"><b>Java</b></td></tr>
+<tr><td><code>char</code><br>(used as character)</td><td>8&nbsp;bits / platform dependent</td>
+  <td><code>byte</code></td><td>8&nbsp;bits</td>
+  <td><code>xdr.xdrEncodeByte(byte)</code><br><code>byte = xdr.xdrDecodeByte()</code></td></tr>
+<tr><td><code>unsigned char</code><br>(used as character)</td><td>8&nbsp;bits / platform dependent</td>
+  <td><code>byte</code></td><td>8&nbsp;bits</td>
+  <td><code>xdr.xdrEncodeByte(byte)</code><br><code>byte = xdr.xdrDecodeByte()</code></td></tr>
+<tr><td><code>char</code><br>(used as 8&nbsp;bit quantitiy)</td><td>8&nbsp;bits / platform dependent</td>
+  <td><code>byte</code></td><td>8&nbsp;bits</td>
+  <td><code>xdr.xdrEncodeByte(byte)</code><br><code>byte = xdr.xdrDecodeByte()</code></td></tr>
+<tr><td><code>unsigned char</code><br>(used as 8&nbsp;bit quantitiy)</td><td>8&nbsp;bits / platform dependent</td>
+  <td><code>byte</code></td><td>8&nbsp;bits</td>
+  <td><code>xdr.xdrEncodeByte(byte)</code><br><code>byte = xdr.xdrDecodeByte()</code></td></tr>
+<tr><td><code>short</code></td><td>platform dependent</td>
+  <td><code>short</code></td><td>16&nbsp;bits</td>
+  <td><code>xdr.xdrEncodeShort(short)</code><br><code>short = xdr.xdrDecodeShort()</code></td></tr>
+<tr><td><code>unsigned short</code></td><td>platform dependent</td>
+  <td><code>short</code></td><td>16&nbsp;bits</td>
+  <td><code>xdr.xdrEncodeShort(short)</code><br><code>short = xdr.xdrDecodeShort()</code></td></tr>
+<tr><td><code>int</code></td><td>32&nbsp;bits</td>
+  <td><code>int</code></td><td>32&nbsp;bits</td>
+  <td><code>xdr.xdrEncodeInt(int)</code><br><code>int = xdr.xdrDecodeInt()</code></td></tr>
+<tr><td><code>unsigned int</code></td><td>32&nbsp;bits</td>
+  <td><code>int</code></td><td>32&nbsp;bits</td>
+  <td><code>xdr.xdrEncodeInt(int)</code><br><code>int = xdr.xdrDecodeInt()</code></td></tr>
+<tr><td><code>hyper</code></td><td>64&nbsp;bits</td>
+  <td><code>long</code></td><td>64&nbsp;bits</td>
+  <td><code>xdr.xdrEncodeLong(long)</code><br><code>long = xdr.xdrDecodeLong()</code></td></tr>
+<tr><td><code>unsigned hyper</code></td><td>64&nbsp;bits</td>
+  <td><code>long</code></td><td>64&nbsp;bits</td>
+  <td><code>xdr.xdrEncodeLong(long)</code><br><code>long = xdr.xdrDecodeLong()</code></td></tr>
+<tr><td><code>enum</code></td><td>32&nbsp;bits</td>
+  <td><code>int</code></td><td>32&nbsp;bits</td>
+  <td><code>xdr.xdrEncodeInt(int)</code><br><code>int = xdr.xdrDecodeInt()</code></td></tr>
+<tr><td><code>bool</code></td><td>&nbsp;</td>
+  <td><code>boolean</code></td><td>&nbsp;</td>
+  <td><code>xdr.xdrEncodeBoolean(boolean)</code><br><code>boolean = xdr.xdrDecodeBoolean()</code></td></tr>
+<tr><td><code>float</code></td><td>32&nbsp;bits</td>
+  <td><code>float</code></td><td>32&nbsp;bits</td>
+  <td><code>xdr.xdrEncodeFloat(float)</code><br><code>float = xdr.xdrDecodeFloat()</code></td></tr>
+<tr><td><code>double</code></td><td>64&nbsp;bits</td>
+  <td><code>double</code></td><td>64&nbsp;bits</td>
+  <td><code>xdr.xdrEncodeDouble(double)</code><br><code>double = xdr.xdrDecodeDouble()</code></td></tr>
+<tr><td><code>quadruple</code></td><td>128&nbsp;bits</td>
+  <td><code>n/a</code></td><td>&nbsp;</td>
+  <td>&nbsp;</td></tr>
+<tr><td><code>opaque[<i>n</i>]</code></td><td>exactly <i>n</i>&nbsp;octets</td>
+  <td><code>byte[]</code></td><td><i>n</i>&nbsp;bytes</td>
+  <td><code>xdr.xdrEncodeOpaque(byte[])</code><br><code>byte[] = xdr.xdrDecodeOpaque(<i>n</i>)</code></td></tr>
+<tr><td><code>opaque&lt;<i>n</i>&gt;</code></td><td>4 bytes size followed by<br>at most <i>n</i>&nbsp;octets</td>
+  <td><code>byte[]</code></td><td>??&nbsp;bytes</td>
+  <td><code>xdr.xdrEncodeDynamicOpaque(byte[])</code><br><code>byte[] = xdr.xdrDecodeDynamicOpaque()</code></td></tr>
+<tr><td><code>opaque&lt;&gt;</code></td><td>4 bytes size followed by<br>??&nbsp;octets</td>
+  <td><code>byte[]</code></td><td>??&nbsp;bytes</td>
+  <td><code>xdr.xdrEncodeDynamicOpaque(byte[])</code><br><code>byte[] = xdr.xdrDecodeDynamicOpaque()</code></td></tr>
+<tr><td><code>string&lt;<i>n</i>&gt;</code></td><td>4 bytes size followed by<br>at most <i>n</i>&nbsp;octets</td>
+  <td><code>String</code></td><td>??&nbsp;bytes</td>
+  <td><code>xdr.xdrEncodeString(String)</code><br><code>String = xdr.xdrDecodeString()</code></td></tr>
+<tr><td><code>string&lt;&gt;</code></td><td>4 bytes size followed by<br>??&nbsp;octets</td>
+  <td><code>String</code></td><td>??&nbsp;bytes</td>
+  <td><code>xdr.xdrEncodeString(String)</code><br><code>String = xdr.xdrDecodeString()</code></td></tr>
+<tr><td><code>void</code></td><td>0&nbsp;bits</td>
+  <td><code>XdrVoid</code></td><td>&nbsp;</td>
+  <td><code>xdrvoid.xdrEncode(xdr)</code><br><code>xdrvoid.xdrDecode(xdr)</code></td></tr>
+</table>
+
+<p>The Remote Tea library also provides method to (de-) serialize vector data
+types of variable length, as shown below. To (de-) derialize fixed-size vectors,
+use the <code>...FixedVector()</code> variants and supply the protocol-defined
+size of the vector -- see the next table but one.
+
+<table border=1 cellpadding=2 cellspacing=1>
+<tr><td colspan=2 align="center"><b>rpcgen / RFC&nbsp;1832</b></td><td colspan=2 align="center"><b>Java</b></td></tr>
+<tr><td><code>opaque&lt;&gt;</code></td><td>4 bytes size followed by<br>??&nbsp;octets</td>
+  <td><code>byte[]</code></td>
+  <td><code>xdr.xdrEncodeDynamicOpaque(byte[])</code><br><code>byte[] = xdr.xdrDecodeDynamicOpaque()</code></td></tr>
+<tr><td><code>char&lt;&gt;</code><br><code>char short&lt;&gt;</code></td><td>4 bytes size followed by<br>??&nbsp;chars</td>
+  <td><code>byte[]</code></td>
+  <td><code>xdr.xdrEncodeByteVector(byte[])</code><br><code>byte[] = xdr.xdrDecodeByteVector()</code></td></tr>
+<tr><td><code>short&lt;&gt;</code><br><code>unsigned short&lt;&gt;</code></td><td>4 bytes size followed by<br>??&nbsp;shorts</td>
+  <td><code>short[]</code></td>
+  <td><code>xdr.xdrEncodeShortVector(short[])</code><br><code>short[] = xdr.xdrDecodeShortVector()</code></td></tr>
+<tr><td><code>int&lt;&gt;</code><br><code>unsigned int&lt;&gt;</code></td><td>4 bytes size followed by<br>??&nbsp;ints</td>
+  <td><code>int[]</code></td>
+  <td><code>xdr.xdrEncodeIntVector(int[])</code><br><code>int[] = xdr.xdrDecodeIntVector()</code></td></tr>
+<tr><td><code>long&lt;&gt;</code><br><code>unsigned long&lt;&gt;</code></td><td>4 bytes size followed by<br>??&nbsp;longs</td>
+  <td><code>int[]</code></td>
+  <td><code>xdr.xdrEncodeIntVector(int[])</code><br><code>int[] = xdr.xdrDecodeIntVector()</code></td></tr>
+<tr><td><code>hyper&lt;&gt;</code><br><code>unsigned hyper&lt;&gt;</code></td><td>4 bytes size followed by<br>??&nbsp;hypers</td>
+  <td><code>long[]</code></td>
+  <td><code>xdr.xdrEncodeLongVector(long[])</code><br><code>long[] = xdr.xdrDecodeLongVector()</code></td></tr>
+<tr><td><code>enum&lt;&gt;</code></td><td>4 bytes size followed by<br>??&nbsp;enums</td>
+  <td><code>int[]</code></td>
+  <td><code>xdr.xdrEncodeIntVector(int[])</code><br><code>int[] = xdr.xdrDecodeIntVector()</code></td></tr>
+<tr><td><code>bool&lt;&gt;</code></td><td>4 bytes size followed by<br>??&nbsp;bools</td>
+  <td><code>boolean[]</code></td>
+  <td><code>xdr.xdrEncodeBooleanVector(boolean[])</code><br><code>boolean[] = xdr.xdrDecodeBooleanVector()</code></td></tr>
+<tr><td><code>float&lt;&gt;</code></td><td>4 bytes size followed by<br>??&nbsp;floats</td>
+  <td><code>float[]</code></td>
+  <td><code>xdr.xdrEncodeFloatVector(float[])</code><br><code>float[] = xdr.xdrDecodeFloatVector()</code></td></tr>
+<tr><td><code>double&lt;&gt;</code></td><td>4 bytes size followed by<br>??&nbsp;doubles</td>
+  <td><code>double[]</code></td>
+  <td><code>xdr.xdrEncodeDoubleVector(double[])</code><br><code>double[] = xdr.xdrDecodeDoubleVector()</code></td></tr>
+</table>
+
+<p>And now for (de-) serializing fixed-size vectors:
+
+<table border=1 cellpadding=2 cellspacing=1>
+<tr><td colspan=2 align="center"><b>rpcgen / RFC&nbsp;1832</b></td><td colspan=2 align="center"><b>Java</b></td></tr>
+<tr><td><code>char[<i>n</i>]</code><br><code>char short[<i>n</i>]</code></td><td>4 bytes size followed by<br><i>n</i>&nbsp;chars</td>
+  <td><code>byte[]</code></td>
+  <td><code>xdr.xdrEncodeByteFixedVector(byte[], int&nbsp;<i>n</i>)</code><br><code>byte[] = xdr.xdrDecodeByteFixedVector(int&nbsp;<i>n</i>)</code></td></tr>
+<tr><td><code>short[<i>n</i>]</code><br><code>unsigned short[<i>n</i>]</code></td><td>4 bytes size followed by<br><i>n</i>&nbsp;shorts</td>
+  <td><code>short[]</code></td>
+  <td><code>xdr.xdrEncodeShortFixedVector(short[], int&nbsp;<i>n</i>)</code><br><code>short[] = xdr.xdrDecodeShortFixedVector(int&nbsp;<i>n</i>)</code></td></tr>
+<tr><td><code>int[<i>n</i>]</code><br><code>unsigned int[<i>n</i>]</code></td><td>4 bytes size followed by<br><i>n</i>&nbsp;ints</td>
+  <td><code>int[]</code></td>
+  <td><code>xdr.xdrEncodeIntFixedVector(int[], int&nbsp;<i>n</i>)</code><br><code>int[] = xdr.xdrDecodeIntFixedVector(int&nbsp;<i>n</i>)</code></td></tr>
+<tr><td><code>long[<i>n</i>]</code><br><code>unsigned long[<i>n</i>]</code></td><td>4 bytes size followed by<br><i>n</i>&nbsp;longs</td>
+  <td><code>int[]</code></td>
+  <td><code>xdr.xdrEncodeIntFixedVector(int[], int&nbsp;<i>n</i>)</code><br><code>int[] = xdr.xdrDecodeIntFixedVector(int&nbsp;<i>n</i>)</code></td></tr>
+<tr><td><code>hyper[<i>n</i>]</code><br><code>unsigned hyper[<i>n</i>]</code></td><td>4 bytes size followed by<br><i>n</i>&nbsp;hypers</td>
+  <td><code>long[]</code></td>
+  <td><code>xdr.xdrEncodeLongFixedVector(long[], int&nbsp;<i>n</i>)</code><br><code>long[] = xdr.xdrDecodeLongFixedVector(int&nbsp;<i>n</i>)</code></td></tr>
+<tr><td><code>enum[<i>n</i>]</code></td><td>4 bytes size followed by<br><i>n</i>&nbsp;enums</td>
+  <td><code>int[]</code></td>
+  <td><code>xdr.xdrEncodeIntFixedVector(int[], int&nbsp;<i>n</i>)</code><br><code>int[] = xdr.xdrDecodeIntFixedVector(int&nbsp;<i>n</i>)</code></td></tr>
+<tr><td><code>bool[<i>n</i>]</code></td><td>4 bytes size followed by<br><i>n</i>&nbsp;bools</td>
+  <td><code>boolean[]</code></td>
+  <td><code>xdr.xdrEncodeBooleanFixedVector(boolean[], int&nbsp;<i>n</i>)</code><br><code>boolean[] = xdr.xdrDecodeBooleanFixedVector(int&nbsp;<i>n</i>)</code></td></tr>
+<tr><td><code>float[<i>n</i>]</code></td><td>4 bytes size followed by<br><i>n</i>&nbsp;floats</td>
+  <td><code>float[]</code></td>
+  <td><code>xdr.xdrEncodeFloatFixedVector(float[], int&nbsp;<i>n</i>)</code><br><code>float[] = xdr.xdrDecodeFloatFixedVector(int&nbsp;<i>n</i>)</code></td></tr>
+<tr><td><code>double[<i>n</i>]</code></td><td>4 bytes size followed by<br><i>n</i>&nbsp;doubles</td>
+  <td><code>double[]</code></td>
+  <td><code>xdr.xdrEncodeDoubleFixedVector(double[], int&nbsp;<i>n</i>)</code><br><code>double[] = xdr.xdrDecodeDoubleFixedVector(int&nbsp;<i>n</i>)</code></td></tr>
+</table>
+
+<p>For every structure you encounter in a .x file, write a Java class,
+which implements the
+<a href="XdrAble.html"><code>XdrAble</code></a> interface. For instance,
+taking this snippet from a rpcgen source file...
+
+<pre>
+struct foo {
+    int bar;
+    float baz;
+    struct foo *next;
+};
+</pre>
+
+<p>...<code>struct foo</code> is translated into Java ONC/RPC babble as:
+
+<pre>
+class foo implements XdrAble {
+   // members of foo structure
+   public int bar;
+   public float baz;
+   public foo next;
+
+   // serialize / encode foo
+    public void xdrEncode(XdrEncodingStream xdr)
+           throws OncRpcException, IOException {
+        xdr.xdrEncodeInt(bar);
+        xdr.xdrEncodeFloat(baz);
+        if ( next == null ) {
+            xdr.xdrEncodeBoolean(false);
+        } else {
+            xdr.xdrEncodeBoolean(true);
+            next.xdrEncode(xdr);
+        }
+    }
+
+    // deserialize / decode foo
+    public void xdrDecode(XdrDecodingStream xdr)
+           throws OncRpcException, IOException {
+        bar = xdr.xdrDecodeInt();
+        baz = xdr.xdrDecodeFloat();
+        if ( !xdr.xdrDecodeBoolean() ) {
+            next = null;
+        } else {
+            next = new foo();
+            next.xdrDecode(xdr);
+        }
+    }
+}
+</pre>
+
+<p>The previous example also shows how to deal with pointers (eeek!) in
+.x files. The are simply transformed into references -- quite a difference,
+really.
+
+<p>Tanslating a descriminated union is typically done the simple and silly way.
+Silly, because unions can not really be represented in the Java language. You
+need to transform them into a class (structure) instead, and this will lead
+to a rather ugly form.
+
+<pre>
+union foo switch (FOOTYPE type) {
+    case BAR_CLASS:
+        bar u_bar;
+    case BAZ_CLASS:
+        baz u_baz;
+}
+</pre>
+
+should become
+
+<pre>
+class foo implements XdrAble {
+    // descriminant value
+    public int type;
+    // arm declarations
+    public bar u_bar;
+    public baz u_baz;
+
+    // descriminant-arm values
+    public static int BAR_CLASS = 1;
+    public static int BAZ_CLASS = 2;
+
+    // serialize / encode foo
+    public void xdrEncode(XdrEncodingStream xdr)
+           throws OncRpcException, IOException {
+        xdr.xdrEncodeInt(type);
+        switch ( type ) {
+        case BAR_CLASS:
+            u_bar.xdrEncode(xdr); break;
+        case BAZ_CLASS:
+            u_baz.xdrEncode(xdr); break;
+        }
+    }
+
+    // deserialize / decode foo
+    public void xdrDecode(XdrDecodingStream xdr)
+           throws OncRpcException, IOException {
+        type = xdr.xdrDecodeInt();
+        switch ( type ) {
+        case BAR_CLASS:
+            u_bar = new bar(); u_bar.xdrDecode(xdr); break;
+        case BAZ_CLASS:
+            u_baz = new bar(); u_bar.xdrDecode(xdr); break;
+        }
+    }
+}
+</pre>
+
+<p>You can also take advantage of polymorphism when translating
+descriminated unions into a class hierarchy. You should then write an abstract
+base class with only one static member function capable of constructing the
+appropriate instance from the XDR stream. The tricky part about this is
+getting the descriminant value into the stream or out of it without
+having to duplicate the decoding code into the constructor. With the skeleton
+below you should be able to do this easily, but you should remember to <b>never
+recycle an object reference</b> and <b>never deserialize the state of
+the object a second time</b> from a XDR stream!
+
+<pre>
+abstract class foobase implements XdrAble {
+    // construct a bar, baz,... class from XDR stream
+    public static foobase xdrNew(XdrDecodingStream xdr)
+           throws OncRpcException, IOException {
+        foobase obj = null;
+        switch ( xdr.xdrDecodeInt() ) {
+        case BAR_CLASS:
+            obj = new bar(); break;
+        case BAZ_CLASS:
+            obj = new baz(); break;
+        }
+        obj.xdrDecode(xdr);
+        return obj;
+    }
+
+    public abstract void xdrEncode(XdrEncodingStream xdr)
+           throws OncRpcException, IOException;
+    public abstract void xdrDecode(XdrDecodingStream xdr)
+           throws OncRpcException, IOException;
+
+    // descriminant values
+    public static int BAR_CLASS = 1;
+    public static int BAZ_CLASS = 2;
+}
+
+class bar extends foobase {
+    public void xdrEncode(XdrEncodingStream xdr)
+           throws OncRpcException, IOException {
+        // encode your members here...
+        // dont forget to encode the descriminant value
+        xdr.xdrEncodeInt(BAR_CLASS);
+        xdr.xdrEncodeFloat(noah);
+    }
+    public void xdrDecode(XdrDecodingStream xdr)
+           throws OncRpcException, IOException {
+        // decode your members here...
+        // but *NEVER* decode the descriminant value
+        noah = xdr.xdrDecodeFloat();
+    }
+}
+
+</pre>
+
+<table><tr><td>
+<p>This package is part of the
+<a href="../../../overview-summary.html">ACPLT/KS ACPLTea Java Library
+package</a>.
+
+<p>(c) 1999, 2002 <a href="http://www.plt.rwth-aachen.de/english">Lehrstuhl f&uuml;r
+Proze&szlig;leittechnik</a>, Aachen University of Technology, Germany.
+
+<p>This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU Library General Public License as
+published by the Free Software Foundation; either version 2 of the
+License, or (at your option) any later version.
+
+<p>This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Library General Public License for more details.
+
+<p>You should have received a copy of the GNU Library General Public
+License along with this program (see the file COPYING.LIB for more
+details); if not, write to the Free Software Foundation, Inc.,
+675 Mass Ave, Cambridge, MA 02139, USA.
+
+</td><td valign=top cellpadding=0 cellspacing=0>
+&nbsp;<img src="../../../teabag.gif">
+</td></tr></table>
+
+
+</body>
+</html>

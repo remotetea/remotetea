@@ -1,0 +1,67 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>Project GetEPTest</TITLE>
+</HEAD>
+<BODY>
+
+<p><font size="+2"><b>PortmapGetPortTest.java</b></font>
+
+<p><hr>
+
+<p>Demonstrates and tests the ONC/RPC portmap client object
+(class <a href="../../../../org/acplt/oncrpc/OncRpcPortmapClient.html"
+><code>OncRpcPortmapClient</code></a>). At the same time UDP-based streams
+are tested too by this example, as communication with the portmapper is
+UDP/IP-based.
+
+<p><ul>
+
+<li>Create portmapper proxy object of class
+<a href="../../../../org/acplt/oncrpc/OncRpcPortmapClient.html"
+><code>OncRpcPortmapClient.</code></a> to contact the portmapper
+on the local host.
+
+<li>Ask for the port number using the
+<a href="../../../../org/acplt/oncrpc/OncRpcPortmapClient.html#getPort(int, int, int)"
+><code>OncRpcPortmapClient.getPort</code></a> method of a particular
+non-existing ONC/RPC server on the local host to test exceptions.
+
+<li>List all registered ONC/RPC servers using
+<a href="../../../../org/acplt/oncrpc/OncRpcPortmapClient.html#listServers"
+><code>OncRpcPortmapClient.listServers</code></a> method.
+
+<li>Release resources and give portmapper proxy object free.
+
+</ul>
+
+<p><hr>
+<table><tr><td>
+<p>This test is part of the <a href="../../../../overview-summary.html">ACPLT/KS
+ACPLTea Java Library package</a>.
+
+<p>(c) 1999 <a href="http://www.plt.rwth-aachen.de/english">Lehrstuhl f&uuml;r
+Proze&szlig;leittechnik</a>, Aachen University of Technology, Germany.
+
+<p>This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU Library General Public License as
+published by the Free Software Foundation; either version 2 of the
+License, or (at your option) any later version.
+
+<p>This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Library General Public License for more details.
+
+<p>You should have received a copy of the GNU Library General Public
+License along with this program (see the file COPYING.LIB for more
+details); if not, write to the Free Software Foundation, Inc.,
+675 Mass Ave, Cambridge, MA 02139, USA.
+
+</td><td valign=top>
+<img src="../../../../teabag.gif">
+</td></tr></table>
+
+</BODY>
+</HTML>
+ 

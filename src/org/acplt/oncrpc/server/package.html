@@ -1,0 +1,276 @@
+<html>
+<head>
+<title>ONC/RPC Server for Java package</title>
+</head>
+<body>
+
+ONC/RPC Server support package.
+
+<p>This package implements classes needed to write ONC/RPC servers
+according to Sun's ONC/RPC Remote Procedure Call specification
+(see RFC&nbsp;1831, RFC&nbsp;1832, RFC&nbsp;1833).
+
+<p>Here is a short introduction to writing ONC/RPC servers. However, at
+the moment this might be not as convenient as you would like it to be, but rather
+low-level. Nevertheless, here are the basic steps to write a simple ONC/RPC
+server. Please also take a look at
+<code>src/tests/org/acplt/oncrpc/ServerTest.java</code>.
+
+<p>To implement an ONC/RPC server, you need to implement the
+<code><a href="OncRpcDispatchable.html">OncRpcDispatchable</a></code> interface.
+This requires implementing the <code>dispatchOncRpcCall</code> method, which
+handles incoming ONC/RPC calls. In the following code snippet we show how to
+handle the ping request (ONC/RPC procedure number 0):
+
+<pre>
+public void dispatchOncRpcCall(OncRpcCallInformation call,
+                               int program, int version, int procedure)
+       throws OncRpcException, IOException {
+    System.out.println("Incomming call for program "
+                       + Integer.toHexString(program)
+                       + "; version " + version
+                       + "; procedure " + Integer.toHexString(procedure));
+    switch ( procedure ) {
+    //
+    // Implement ping call...
+    //
+    case 0:
+        call.retrieveCall(XdrVoid.XDR_VOID);
+        call.reply(XdrVoid.XDR_VOID);
+        break;
+    //
+    // For all unknown calls, send back an error reply.
+    //
+    default:
+        call.failProcedureUnavailable();
+    }
+}
+</pre>
+
+<p>For every incoming ONC/RPC call, you'll receive some information about the
+call through the <code>call</code> parameter (of class
+<code><a href="OncRpcCallInformation.html">OncRpcCallInformation</a></code>).
+The <code>call</code> object is necessary to retrieve the parameters of the
+call as well as to sent back the reply.
+For the ping call (procedure number 0), the ONC/RPC dispatcher shown above
+simply retrieves the parameters using
+<code><a href="OncRpcCallInformation.html#retrieveCall(org.acplt.oncrpc.XdrAble)">retrieveCall(XdrAble)</a></code>.
+Because the call expects no parameters, we supply the static void object
+<code>XdrVoid.XDR_VOID</code> to the <code>retrieveCall</code> method.
+
+<p>To send back the reply for the ping call, we use
+<code><a href="OncRpcCallInformation.html#retrieveCall(org.acplt.oncrpc.XdrAble)">OncRpcCallInformation(XdrAble)</a></code>.
+Again, the caller does not expect any reply, so we specify the static void object
+<code>XdrVoid.XDR_VOID</code> once more. Then, we simply return and let the
+ONC/RPC magic sending back the reply.
+
+<p>In case we receive an ONC/RPC call for an unknown procedure (and / or version)
+we simply call the
+<code><a href="OncRpcCallInformation.html#failProcedureUnavailable">failProcedureUnavailable()</a></code>
+method of the <code>call</code> object.
+
+<p>Now that we have solved the handling of ONC/RPC calls, we can now set up the
+stage, also known as an ONC/RPC server. To receive incoming calls, you first need
+to create so-called ONC/RPC server transports. In our example we will create one
+transport for each the UDP/IP and TCP/IP protocols. When creating a server
+transport, you need to specify in the call to the constructor:
+
+<ul>
+<li>the object which will handle incoming ONC/RPC calls,
+<li>the port number where to wait for incoming calls (if you do not need to
+listen at a specific port number, just specify 0, so the system will choose
+the next free port number for you),
+<li>the program number to handle through the transport,
+<li>the program's version number,
+<li>and finally an optional buffer size. This buffer size is especially
+important for UDP/IP-based transports, as they are only able to receive calls
+and send back replies not larger than the buffer size. For TCP/IP-based
+transport the buffer size only affects how efficient the network communication
+will be, for instance, how often the buffer needs to be flushed and data
+transmitted over the network. Especially with large calls or replies, larger
+buffer sizes can improve communication speed.
+</ul>
+
+<pre>
+OncRpcUdpServerTransport udpTrans =
+    new OncRpcUdpServerTransport(this, 55555, 0x49679, 1, 8192);
+OncRpcTcpServerTransport tcpTrans =
+    new OncRpcTcpServerTransport(this, 55555, 0x49679, 1, 8192);
+</pre>
+
+<p>When you're ready, you should first register your ONC/RPC server with the
+(local) portmapper by calling the <code>register()</code> method on all
+server transports you created during the previous step. Then start listening
+on these transports by calling their <code>listen()</code> methods.
+
+<pre>
+udpTrans.register();
+tcpTrans.register();
+
+tcpTrans.listen();
+udpTrans.listen();
+
+System.out.println("Server started.");
+</pre>
+
+<p>Note that the <code>listen()</code> methods will create new threads, which
+then will be responsible for handling incoming ONC/RPC calls. Note that you
+may need to make your ONC/RPC dispatch handler
+(<code><a href="OncRpcDispatchable.html">OncRpcDispatchable</a></code>)
+<code>synchronized</code> if
+you can not handle simultaneous calls from multiple threads at the same time.
+
+<p>The tricky part is stopping the server somehow. Unfortunately, this is not
+an easy issue on Java platforms and up to you. For an example, look at the
+source of the
+<code>src/tests/org/acplt/oncrpc/ServerTest.java</code> example. Basically, this
+example uses the ONC/RPC call <code>42</code> to shut down a server.
+
+<p>After you have received the shutdown notification you can shut down the
+server transports (for instance) from your main thread using the
+<code>close()</code> method:
+
+<pre>
+tcpTrans.unregister();
+tcpTrans.close();
+
+udpTrans.unregister();
+udpTrans.close();
+
+System.out.println("Server shut down.");
+</pre>
+
+<p>You should also deregister your server from the portmapper at the same time
+you're closing the transports. Note that the
+<code><a href="OncRpcTcpServerTransport.html#close">OncRpcTcpServerTransport.close()</a></code>
+method also closes all currently open TCP/IP transports which have been created to
+handle individual TCP/IP connections from individual clients.
+
+<p>Now that's basically all you need to know to write ONC/RPC servers. However,
+if you plan to mess with authentication, read on...
+
+<p>ONC/RPC authentication on the server side is done within the call dispatcher.
+Before executing an ONC/RPC call, first check the authentication object for
+kosher information:
+
+<pre>
+public void dispatchOncRpcCall(OncRpcCallInformation call,
+                               int program, int version, int procedure)
+       throws OncRpcException, IOException {
+    switch ( call.callMessage.auth.getAuthenticationType() )
+    case OncRpcAuthType.ONCRPC_AUTH_UNIX:
+        ...
+        break;
+    case OncRpcAuthType.ONCRPC_AUTH_SHORT:
+        ...
+        break;
+    case OncRpcAuthType.ONCRPC_AUTH_NONE:
+    default:
+        throw(new OncRpcAuthenticationException(
+                      OncRpcAuthStatus.ONCRPC_AUTH_BADCRED));
+    }
+</pre>
+
+<p>The example above is a very restrictive one in that it even forbids ONC/RPC
+clients to ping the server without proper authentication.
+
+<p>In a more elaborate example below you can see how to handle
+authentication of type <code>AUTH_UNIX</code>. It also shows how to use
+shorthand credentials, if you like.
+
+<pre>
+public void dispatchOncRpcCall(OncRpcCallInformation call,
+                               int program, int version, int procedure)
+       throws OncRpcException, IOException {
+    switch ( call.callMessage.auth.getAuthenticationType() )
+    case OncRpcAuthType.ONCRPC_AUTH_UNIX:
+        OncRpcServerAuthUnix auth = (OncRpcServerAuthUnix) call.callMessage.auth;
+        if ( (auth.uid != 42)
+             && (auth.gid != 815) ) {
+            throw(new OncRpcAuthenticationException(
+                          OncRpcAuthStatus.ONCRPC_AUTH_BADCRED));
+        }
+        //
+        // Suggest shorthand authentication...
+        //
+        XdrBufferEncodingStream xdr = new XdrBufferEncodingStream(8);
+        xdr.beginEncoding(null, 0);
+        xdr.xdrEncodeInt(42);
+        xdr.xdrEncodeInt(~42);
+        xdr.endEncoding();
+        //
+        // ATTENTION: this will return the *whole* buffer created by the
+        // constructor of XdrBufferEncodingStream(len) above. So make sure
+        // that you really want to return the whole buffer!
+        //
+        auth.setShorthandVerifier(xdr.getXdrData());
+        break;
+
+    case OncRpcAuthType.ONCRPC_AUTH_SHORT:
+        //
+        // Check shorthand credentials.
+        //
+        OncRpcServerAuthShort auth = (OncRpcServerAuthShort) call.callMessage.auth;
+        XdrBufferDecodingStream xdr =
+            new XdrBufferDecodingStream(auth.getShorthandCred());
+        xdr.beginDecoding();
+        int credv1 = xdr.xdrDecodeInt();
+        int credv2 = xdr.xdrDecodeInt();
+        xdr.endDecoding();
+        if ( credv1 != ~credv2 ) {
+            throw(new OncRpcAuthenticationException(
+                          OncRpcAuthStatus.ONCRPC_AUTH_REJECTEDCRED));
+        }
+        if ( (++shorthandCredCounter % 3) == 0 ) {
+            throw(new OncRpcAuthenticationException(
+                          OncRpcAuthStatus.ONCRPC_AUTH_REJECTEDCRED));
+        }
+        break;
+
+    case OncRpcAuthType.ONCRPC_AUTH_NONE:
+        if ( procedure != 0 ) {
+            throw(new OncRpcAuthenticationException(
+                          OncRpcAuthStatus.ONCRPC_AUTH_BADCRED));
+        }
+
+    default:
+        throw(new OncRpcAuthenticationException(
+                      OncRpcAuthStatus.ONCRPC_AUTH_BADCRED));
+    }
+    
+    switch ( procedure ) {
+        ...
+    }
+}
+</pre>
+
+<table><tr><td>
+<p>This package is part of the
+<a href="../../../../overview-summary.html">ACPLT/KS ACPLTea Java Library
+package</a>.
+
+<p>(c) 1999 <a href="http://www.plt.rwth-aachen.de/english">Lehrstuhl f&uuml;r
+Proze&szlig;leittechnik</a>, Aachen University of Technology, Germany.
+
+<p>This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU Library General Public License as
+published by the Free Software Foundation; either version 2 of the
+License, or (at your option) any later version.
+
+<p>This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Library General Public License for more details.
+
+<p>You should have received a copy of the GNU Library General Public
+License along with this program (see the file COPYING.LIB for more
+details); if not, write to the Free Software Foundation, Inc.,
+675 Mass Ave, Cambridge, MA 02139, USA.
+
+</td><td valign=top cellpadding=0 cellspacing=0>
+&nbsp;<img src="../../../../teabag.gif">
+</td></tr></table>
+
+
+</body>
+</html>
