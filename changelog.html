@@ -43,6 +43,13 @@ project on its own feet. Let's see where this will lead to.</p>
   statements anymore. This silences especially the
   <q>Eclipse</q> IDE, but also other <q>smart asses</q>.</span></li>
 
+  <li><span>It is now possible to optionally control the character
+  encoding used when (de-)serializing strings. The <code>OncRpcClient</code>
+  class now has a pair of accessors
+  <code>setCharacterEncoding(<i>encoding</i>)</code> and
+  <code>getCharacterEncoding()</code>. Similiar, <code>OncRpcServerStub</code>
+  gives control over character encoding on the server side.</span></li>
+
 </ul>
 
 <h2>Version 1.0.2:</h2>
