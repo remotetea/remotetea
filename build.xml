@@ -11,7 +11,8 @@
 	<!-- -->
 	<property name="buildDir" value="classes" />
 	<property name="srcDir" value="src" />
-	<property name="docDir" value="doc" />
+	<property name="javadocDir" value="javadoc" />
+	<property name="distDir" value="dist" />
 
 	<!-- -->
 
@@ -51,21 +52,54 @@
 	
 	<!-- Generate JavaDoc -->
 	<target name="javadoc" description="generate JavaDoc documentation files">
-		<delete dir="${docDir}"/>
-		<mkdir dir="${docDir}" />
+		<delete dir="${javadocDir}"/>
+		<mkdir dir="${javadocDir}" />
 		<javadoc
 				sourcepath="${srcDir}"
-				destdir="${docDir}"
+				destdir="${javadocDir}"
 				classpath="${buildDir}"
 				private="true"
 				author="on">
 			<package name="org.acplt.oncrpc" />
 			<package name="org.acplt.oncrpc.server" />
 			<package name="org.acplt.oncrpc.web" />
-			<package name="org.acplt.apps.jrpcgen" />
-			<package name="org.acplt.apps.jportmap" />
-			<package name="org.acplt.apps.ant" />
+			<package name="org.acplt.oncrpc.apps.jrpcgen" />
+			<package name="org.acplt.oncrpc.apps.jportmap" />
+			<package name="org.acplt.oncrpc.apps.ant" />
 		</javadoc>
+	</target>
+
+	<!-- Generate SF file packages -->
+	<target name="sf" description="generate SF file packages"
+		    depends="jar,javadoc">
+		<mkdir dir="${distDir}"/>
+		<!-- binary plus documentation distribution -->
+		<zip zipfile="${distDir}/remotetea-bin-doc.zip">
+			<zipfileset dir="." prefix="remotetea/">
+				<include name="${buildDir}/*.jar" />
+				<include name="${javadocDir}/" />
+			</zipfileset>
+			<zipfileset dir="." prefix="remotetea/">
+				<include name="readme.html" />
+				<include name="changelog.html" />
+				<include name="docstyle.css" />
+				<include name="COPYING.LIB" />
+			</zipfileset>
+		</zip>
+		<!-- source only distribution -->
+		<zip zipfile="${distDir}/remotetea-src.zip">
+			<zipfileset dir="." prefix="remotetea/">
+				<include name=".project" />
+				<include name=".classpath" />
+				<include name="readme.html" />
+				<include name="changelog.html" />
+				<include name="docstyle.css" />
+				<include name="COPYING.LIB" />
+			</zipfileset>
+			<zipfileset dir="." prefix="remotetea/">
+				<include name="${srcDir}/" />
+			</zipfileset>
+		</zip>
 	</target>
 
 </project>
