@@ -69,7 +69,7 @@ public class XdrUdpEncodingStream extends XdrEncodingStream {
      * Begins encoding a new XDR record. This involves resetting this
      * encoding XDR stream back into a known state.
      *
-     * @param receiver Indicates the receiver of the XDR data. This can be
+     * @param receiverAddress Indicates the receiver of the XDR data. This can be
      *   <code>null</code> for XDR streams connected permanently to a
      *   receiver (like in case of TCP/IP based XDR streams). 
      * @param receiverPort Port number of the receiver.
