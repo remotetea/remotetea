@@ -35,7 +35,7 @@ public interface OncRpcConstants {
     /**
      * The current version of the Remote Tea Java library as a string.
      */
-    public static final String REMOTETEA_VERSION_STRING = "1.0.1";
+    public static final String REMOTETEA_VERSION_STRING = "1.0.3";
 
     /**
      * The current major version number of the Remote Tea Java library.
@@ -50,7 +50,7 @@ public interface OncRpcConstants {
     /**
      * The current patch level of the Remote Tea Java library.
      */
-    public static final int REMOTETEA_VERSION_PATCHLEVEL = 1;
+    public static final int REMOTETEA_VERSION_PATCHLEVEL = 3;
 
     /**
      * The current preversion version number. If not zero, then this
