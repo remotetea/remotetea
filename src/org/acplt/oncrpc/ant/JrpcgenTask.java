@@ -29,7 +29,6 @@ import java.io.File;
 import java.io.IOException;
 import org.acplt.oncrpc.apps.jrpcgen.jrpcgen;
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Task;
 
 /**
  * Ant task to run the ONC/RPC '.x' file compiler provided in the Remote Tea

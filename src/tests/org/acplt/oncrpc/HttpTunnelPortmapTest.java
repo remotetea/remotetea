@@ -25,8 +25,6 @@
 package tests.org.acplt.oncrpc;
 
 import java.io.IOException;
-import java.net.*;
-
 import org.acplt.oncrpc.*;
 
 public class HttpTunnelPortmapTest {

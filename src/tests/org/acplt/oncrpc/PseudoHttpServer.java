@@ -27,8 +27,6 @@ package tests.org.acplt.oncrpc;
 import java.io.*;
 import java.net.*;
 
-import org.acplt.oncrpc.*;
-
 public class PseudoHttpServer {
 
     public PseudoHttpServer()
