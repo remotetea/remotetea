@@ -565,6 +565,27 @@ public class OncRpcHttpClient extends OncRpcClient {
         } // for ( refreshesLeft )
     }
 
+	/**
+	 * Set the character encoding for (de-)serializing strings.
+	 *
+	 * @param characterEncoding the encoding to use for (de-)serializing strings.
+	 *   If <code>null</code>, the system's default encoding is to be used.
+	 */
+	public void setCharacterEncoding(String characterEncoding) {
+		sendingXdr.setCharacterEncoding(characterEncoding);
+		receivingXdr.setCharacterEncoding(characterEncoding);
+	}
+
+	/**
+	 * Get the character encoding for (de-)serializing strings.
+	 *
+	 * @return the encoding currently used for (de-)serializing strings.
+	 *   If <code>null</code>, then the system's default encoding is used.
+	 */
+	public String getCharacterEncoding() {
+		return receivingXdr.getCharacterEncoding();
+	}
+
     /**
      * DNS name of host where to contact HTTP server. Note that we can not
      * use an <code>InetAddress</code> here as we have to support virtual

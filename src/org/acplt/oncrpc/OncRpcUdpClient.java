@@ -627,6 +627,27 @@ public class OncRpcUdpClient extends OncRpcClient {
         return retransmissionTimeout;
     }
 
+	/**
+	 * Set the character encoding for (de-)serializing strings.
+	 *
+	 * @param characterEncoding the encoding to use for (de-)serializing strings.
+	 *   If <code>null</code>, the system's default encoding is to be used.
+	 */
+	public void setCharacterEncoding(String characterEncoding) {
+		receivingXdr.setCharacterEncoding(characterEncoding);
+		sendingXdr.setCharacterEncoding(characterEncoding);
+	}
+
+	/**
+	 * Get the character encoding for (de-)serializing strings.
+	 *
+	 * @return the encoding currently used for (de-)serializing strings.
+	 *   If <code>null</code>, then the system's default encoding is used.
+	 */
+	public String getCharacterEncoding() {
+		return receivingXdr.getCharacterEncoding();
+	}
+
     /**
      * UDP socket used for datagram-based communication with an ONC/RPC
      * server.

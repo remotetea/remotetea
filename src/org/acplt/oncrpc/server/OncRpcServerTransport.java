@@ -160,6 +160,22 @@ public abstract class OncRpcServerTransport {
         return port;
     }
 
+	/**
+	 * Set the character encoding for (de-)serializing strings.
+	 *
+	 * @param characterEncoding the encoding to use for (de-)serializing strings.
+	 *   If <code>null</code>, the system's default encoding is to be used.
+	 */
+	public abstract void setCharacterEncoding(String characterEncoding);
+
+	/**
+	 * Get the character encoding for (de-)serializing strings.
+	 *
+	 * @return the encoding currently used for (de-)serializing strings.
+	 *   If <code>null</code>, then the system's default encoding is used.
+	 */
+	public abstract String getCharacterEncoding();
+
     /**
      * Retrieves the parameters sent within an ONC/RPC call message. It also
      * makes sure that the deserialization process is properly finished after

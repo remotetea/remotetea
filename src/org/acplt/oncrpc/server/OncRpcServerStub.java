@@ -182,5 +182,35 @@ public abstract class OncRpcServerStub {
         }
     }
 
+	/**
+	 * Set the character encoding for deserializing strings.
+	 *
+	 * @param characterEncoding the encoding to use for deserializing strings.
+	 *   If <code>null</code>, the system's default encoding is to be used.
+	 */
+	public void setCharacterEncoding(String characterEncoding) {
+		this.characterEncoding = characterEncoding;
+		int size = transports.length;
+		for ( int idx = 0; idx < size; ++idx ) {
+			transports[idx].setCharacterEncoding(characterEncoding);
+		}
+	}
+
+	/**
+	 * Get the character encoding for deserializing strings.
+	 *
+	 * @return the encoding currently used for deserializing strings.
+	 *   If <code>null</code>, then the system's default encoding is used.
+	 */
+	public String getCharacterEncoding() {
+		return characterEncoding;
+	}
+
+	/**
+	 * Encoding to use when deserializing strings or <code>null</code> if
+	 * the system's default encoding should be used.
+	 */
+	private String characterEncoding;
+
 }
 // End of OncRpcServerStub.java

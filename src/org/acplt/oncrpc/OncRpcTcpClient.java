@@ -484,6 +484,27 @@ public class OncRpcTcpClient extends OncRpcClient {
         return transmissionTimeout;
     }
 
+	/**
+	 * Set the character encoding for (de-)serializing strings.
+	 *
+	 * @param characterEncoding the encoding to use for (de-)serializing strings.
+	 *   If <code>null</code>, the system's default encoding is to be used.
+	 */
+	public void setCharacterEncoding(String characterEncoding) {
+		receivingXdr.setCharacterEncoding(characterEncoding);
+		sendingXdr.setCharacterEncoding(characterEncoding);
+	}
+
+	/**
+	 * Get the character encoding for (de-)serializing strings.
+	 *
+	 * @return the encoding currently used for (de-)serializing strings.
+	 *   If <code>null</code>, then the system's default encoding is used.
+	 */
+	public String getCharacterEncoding() {
+		return receivingXdr.getCharacterEncoding();
+	}
+
     /**
      * TCP socket used for stream-oriented communication with an ONC/RPC
      * server.

@@ -352,19 +352,11 @@ public abstract class XdrEncodingStream {
      */
     public final void xdrEncodeString(String value)
            throws OncRpcException, IOException {
-        xdrEncodeDynamicOpaque(value.getBytes());
-        //
-        // As calling xdrEncodeDynamicOpaque(value.getBytes()) can be a major
-        // performance hit when encoding ASCII strings (which are the typical
-        // for ONC/RPC), we now use a workaround which is faster than
-        // String.getBytes().
-        //
-//        int len = value.length();
-//        byte [] bytes = new byte[len];
-//        for ( int i = 0; i < len; ++i ) {
-//            bytes[i] = value.charAt(i);
-//        }
-//        xdrEncodeOpaque(bytes);
+        if ( characterEncoding != null ) {
+			xdrEncodeDynamicOpaque(value.getBytes(characterEncoding));
+        } else { 
+			xdrEncodeDynamicOpaque(value.getBytes());
+        }
     }
 
     /**
@@ -653,6 +645,32 @@ public abstract class XdrEncodingStream {
             xdrEncodeString(value[i]);
         }
     }
+
+	/**
+	 * Set the character encoding for serializing strings.
+	 *
+	 * @param characterEncoding the encoding to use for serializing strings.
+	 *   If <code>null</code>, the system's default encoding is to be used.
+	 */
+	public void setCharacterEncoding(String characterEncoding) {
+		this.characterEncoding = characterEncoding;
+	}
+
+	/**
+	 * Get the character encoding for serializing strings.
+	 *
+	 * @return the encoding currently used for serializing strings.
+	 *   If <code>null</code>, then the system's default encoding is used.
+	 */
+	public String getCharacterEncoding() {
+		return characterEncoding;
+	}
+
+	/**
+	 * Encoding to use when serializing strings or <code>null</code> if
+	 * the system's default encoding should be used.
+	 */
+	private String characterEncoding = null;
 
 }
 

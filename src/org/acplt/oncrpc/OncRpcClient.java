@@ -499,6 +499,22 @@ public abstract class OncRpcClient {
         return auth;
     }
 
+	/**
+	 * Set the character encoding for (de-)serializing strings.
+	 *
+	 * @param characterEncoding the encoding to use for (de-)serializing strings.
+	 *   If <code>null</code>, the system's default encoding is to be used.
+	 */
+	public abstract void setCharacterEncoding(String characterEncoding);
+
+	/**
+	 * Get the character encoding for (de-)serializing strings.
+	 *
+	 * @return the encoding currently used for (de-)serializing strings.
+	 *   If <code>null</code>, then the system's default encoding is used.
+	 */
+	public abstract String getCharacterEncoding();
+
     /**
      * Create next message identifier. Message identifiers are used to match
      * corresponding ONC/RPC call and reply messages.

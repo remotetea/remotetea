@@ -399,6 +399,26 @@ public class OncRpcTcpServerTransport extends OncRpcServerTransport {
         return transmissionTimeout;
     }
 
+	/**
+	 * Set the character encoding for (de-)serializing strings.
+	 *
+	 * @param characterEncoding the encoding to use for (de-)serializing strings.
+	 *   If <code>null</code>, the system's default encoding is to be used.
+	 */
+	public void setCharacterEncoding(String characterEncoding) {
+		this.characterEncoding = characterEncoding;
+	}
+
+	/**
+	 * Get the character encoding for (de-)serializing strings.
+	 *
+	 * @return the encoding currently used for (de-)serializing strings.
+	 *   If <code>null</code>, then the system's default encoding is used.
+	 */
+	public String getCharacterEncoding() {
+		return characterEncoding;
+	}
+
     /**
      * TCP socket used for stream-based communication with ONC/RPC
      * clients.
@@ -420,6 +440,12 @@ public class OncRpcTcpServerTransport extends OncRpcServerTransport {
      * sent within replies.
      */
     protected int transmissionTimeout = 30000;
+
+	/**
+	 * Encoding to use when deserializing strings or <code>null</code> if
+	 * the system's default encoding should be used.
+	 */
+	private String characterEncoding = null;
 
 
     /**
