@@ -25,7 +25,6 @@
 package org.acplt.oncrpc.server;
 
 import org.acplt.oncrpc.*;
-import java.io.IOException;
 
 /**
  * The <code>OncRpcServerAcceptedCallMessage</code> class represents (on the

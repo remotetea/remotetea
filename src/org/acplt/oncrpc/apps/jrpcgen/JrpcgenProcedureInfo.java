@@ -25,7 +25,6 @@
 package org.acplt.oncrpc.apps.jrpcgen;
 
 import java.util.Vector;
-import java.io.PrintWriter;
 
 /**
  * The <code>JrpcgenProcedureInfo</code> class contains information about a

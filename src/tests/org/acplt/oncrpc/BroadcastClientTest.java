@@ -27,8 +27,6 @@ package tests.org.acplt.oncrpc;
 import java.io.IOException;
 import java.net.*;
 import java.util.Vector;
-import java.util.TooManyListenersException;
-
 import org.acplt.oncrpc.*;
 
 public class BroadcastClientTest implements OncRpcBroadcastListener {

@@ -24,8 +24,6 @@
 
 package org.acplt.oncrpc.apps.jrpcgen;
 
-import java.util.Vector;
-
 /**
  * The <code>JrpcgenUnionArm</code> class represents a single union arm defined
  * for a particular union in an rpcgen "x"-file.

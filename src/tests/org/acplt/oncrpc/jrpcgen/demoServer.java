@@ -25,7 +25,6 @@
 package tests.org.acplt.oncrpc.jrpcgen;
 
 import org.acplt.oncrpc.*;
-import org.acplt.oncrpc.server.*;
 
 import java.io.IOException;
 

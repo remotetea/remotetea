@@ -24,9 +24,6 @@
 
 package org.acplt.oncrpc.apps.jrpcgen;
 
-import java.util.Vector;
-import java.io.PrintWriter;
-
 /**
  * The <code>JrpcgenParamInfo</code> class contains information about the
  * data type of a procedure's parameter, as well as the parameter's optional

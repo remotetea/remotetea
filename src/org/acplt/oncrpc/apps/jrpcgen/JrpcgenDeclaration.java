@@ -24,8 +24,6 @@
 
 package org.acplt.oncrpc.apps.jrpcgen;
 
-import java.util.Vector;
-
 /**
  * The <code>JrpcgenDeclaration</code> class represents a single declaration
  * from an rpcgen "x"-file.

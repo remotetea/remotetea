@@ -28,8 +28,6 @@ import org.acplt.oncrpc.*;
 
 import java.net.InetAddress;
 
-import java.io.IOException;
-
 /**
  *
  */
