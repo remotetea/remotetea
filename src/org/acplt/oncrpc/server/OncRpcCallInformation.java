@@ -131,7 +131,7 @@ public class OncRpcCallInformation {
      * of this ONC/RPC call. This method belongs to the lower-level access
      * pattern when handling ONC/RPC calls.
      *
-     * @result Reference to decoding XDR stream.
+     * @return Reference to decoding XDR stream.
      */
     public XdrDecodingStream getXdrDecodingStream() {
         return transport.getXdrDecodingStream();
@@ -206,7 +206,7 @@ public class OncRpcCallInformation {
      * to this ONC/RPC call. This method belongs to the lower-level access
      * pattern when handling ONC/RPC calls.
      *
-     * @result Reference to enecoding XDR stream.
+     * @return Reference to enecoding XDR stream.
      */
     public XdrEncodingStream getXdrEncodingStream() {
         return transport.getXdrEncodingStream();

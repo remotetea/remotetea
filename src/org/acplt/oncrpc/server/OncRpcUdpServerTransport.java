@@ -246,7 +246,7 @@ public class OncRpcUdpServerTransport extends OncRpcServerTransport {
      * of this ONC/RPC call. This method belongs to the lower-level access
      * pattern when handling ONC/RPC calls.
      *
-     * @result Reference to decoding XDR stream.
+     * @return Reference to decoding XDR stream.
      */
     protected XdrDecodingStream getXdrDecodingStream() {
         return receivingXdr;
@@ -276,7 +276,7 @@ public class OncRpcUdpServerTransport extends OncRpcServerTransport {
      * to this ONC/RPC call. This method belongs to the lower-level access
      * pattern when handling ONC/RPC calls.
      *
-     * @result Reference to enecoding XDR stream.
+     * @return Reference to enecoding XDR stream.
      */
     protected XdrEncodingStream getXdrEncodingStream() {
         return sendingXdr;

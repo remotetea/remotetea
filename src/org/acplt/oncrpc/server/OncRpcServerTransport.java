@@ -154,7 +154,7 @@ public abstract class OncRpcServerTransport {
      * Returns port number of socket this server transport listens on for
      * incoming ONC/RPC calls.
      *
-     * @result Port number of socket listening for incoming calls.
+     * @return Port number of socket listening for incoming calls.
      */
     public int getPort() {
         return port;
@@ -180,7 +180,7 @@ public abstract class OncRpcServerTransport {
      * of this ONC/RPC call. This method belongs to the lower-level access
      * pattern when handling ONC/RPC calls.
      *
-     * @result Reference to decoding XDR stream.
+     * @return Reference to decoding XDR stream.
      */
     protected abstract XdrDecodingStream getXdrDecodingStream();
 
@@ -203,7 +203,7 @@ public abstract class OncRpcServerTransport {
      * to this ONC/RPC call. This method belongs to the lower-level access
      * pattern when handling ONC/RPC calls.
      *
-     * @result Reference to enecoding XDR stream.
+     * @return Reference to enecoding XDR stream.
      */
     protected abstract XdrEncodingStream getXdrEncodingStream();
 
