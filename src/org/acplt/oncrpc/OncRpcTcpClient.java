@@ -239,7 +239,7 @@ public class OncRpcTcpClient extends OncRpcClient {
      *
      * @param procedureNumber Procedure number of the procedure to call.
      * @param versionNumber Protocol version number.
-     * @param parameters The parameters of the procedure to call, contained
+     * @param params The parameters of the procedure to call, contained
      *   in an object which implements the {@link XdrAble} interface.
      * @param result The object receiving the result of the procedure call.
      *
@@ -401,7 +401,7 @@ public class OncRpcTcpClient extends OncRpcClient {
      * </pre>
      *
      * @param procedureNumber Procedure number of the procedure to call.
-     * @param parameters The parameters of the procedure to call, contained
+     * @param params The parameters of the procedure to call, contained
      *   in an object which implements the {@link XdrAble} interface.
      * @param flush Make sure that all pending batched calls are sent to
      *   the server.

@@ -680,7 +680,6 @@ public class jrpcgen {
      *   <code>false</code> if decoding method is to be returned.
      * @param oref name of object reference or <code>null</code> if
      *   "this" should be used instead.
-     * @param tail <code>true</code> if en-/decoding the tail element.
      */
     public static String codingMethod(JrpcgenDeclaration decl, boolean encode,
                                         String oref) {
@@ -847,7 +846,7 @@ public class jrpcgen {
      *
      * @param dataType data type identifier to check.
      *
-     * @result data type identifier.
+     * @return data type identifier.
      */
     public static String checkForSpecials(String dataType) {
         if ( globalIdentifiers.get(dataType) instanceof JrpcgenEnum ) {

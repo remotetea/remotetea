@@ -65,7 +65,7 @@ import java.lang.reflect.*;
  * now a <code>connect()</code> method available. It is more than just a
  * simple wrapper for pre JDK&nbsp;1.4.
  *
- * @version: $Revision$ $Date$ $State$ $Locker$
+ * @version $Revision$ $Date$ $State$ $Locker$
  * @author Harald Albrecht
  */
 public class OncRpcTcpSocketHelper {

@@ -233,8 +233,6 @@ public class OncRpcCallInformation {
      * dispatchers. Instead use the other {@link #reply(XdrAble) reply method}
      * which just expects a serializable object to send back to the caller.
      *
-     * @param callInfo information about the original call, which are necessary
-     *   to send back the reply to the appropriate caller.
      * @param state ONC/RPC reply message header indicating success or failure
      *   and containing associated state information.
      * @param reply If not <code>null</code>, then this parameter references

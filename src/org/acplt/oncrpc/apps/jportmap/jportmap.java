@@ -120,8 +120,8 @@ public class jportmap extends OncRpcServerStub
      * same program and version number is found, this is returned instead.
      * This is compatible with the way Sun's portmap implementation works.
      *
-     * @param (program, version, protocol) to look up. The port field is not
-     *   used.
+     * @param params server identification (program, version, protocol) to
+     *   look up. The port field is not used.
      *
      * @return port number where server listens for incomming ONC/RPC calls,
      *   or <code>0</code>, if no server is registered for (program, protocol).

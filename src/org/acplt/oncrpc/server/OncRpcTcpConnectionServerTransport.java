@@ -52,8 +52,6 @@ public class OncRpcTcpConnectionServerTransport extends OncRpcServerTransport {
      * @param dispatcher Reference to interface of an object capable of
      *   dispatching (handling) ONC/RPC calls.
      * @param socket TCP/IP-based socket of new connection.
-     * @param port Number of port where the server will wait for incoming
-     *   calls.
      * @param program Number of ONC/RPC program handled by this server
      *   transport.
      * @param version Version number of ONC/RPC program handled.
@@ -86,8 +84,6 @@ public class OncRpcTcpConnectionServerTransport extends OncRpcServerTransport {
      * @param dispatcher Reference to interface of an object capable of
      *   dispatching (handling) ONC/RPC calls.
      * @param socket TCP/IP-based socket of new connection.
-     * @param port Number of port where the server will wait for incoming
-     *   calls.
      * @param info Array of program and version number tuples of the ONC/RPC
      *   programs and versions handled by this transport.
      * @param bufferSize Size of buffer used when receiving and sending

@@ -67,7 +67,7 @@ class JrpcgenProcedureInfo {
      *   version of an ONC/RPC program.
      * @param procedureNumber Procedure number assigned to remote procedure.
      * @param resultType Type specifier of result returned by remote procedure.
-     * @param parameterType Type specifier of parameter to the remote procedure.
+     * @param parameters Type specifier of parameter to the remote procedure.
      */
     public JrpcgenProcedureInfo(String procedureId, String procedureNumber,
                                 String resultType, Vector parameters) {
