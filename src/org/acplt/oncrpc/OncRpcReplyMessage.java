@@ -24,8 +24,6 @@
 
 package org.acplt.oncrpc;
 
-import java.io.IOException;
-
 /**
  * The <code>OncRpcReplyMessage</code> class represents an ONC/RPC reply
  * message as defined by ONC/RPC in RFC 1831. Such messages are sent back by

@@ -26,7 +26,6 @@ package org.acplt.oncrpc;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
-import java.net.InetAddress;
 import org.acplt.oncrpc.web.*;
 
 /**

@@ -26,12 +26,8 @@ package org.acplt.oncrpc;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
-import java.net.SocketException;
 import java.net.InetAddress;
 import java.net.DatagramSocket;
-
-import java.util.EventListener;
-import java.util.TooManyListenersException;
 
 /**
  * ONC/RPC client which communicates with ONC/RPC servers over the network
@@ -429,7 +425,7 @@ public class OncRpcUdpClient extends OncRpcClient {
      * OncRpcBroadcastListener <code>listener</code>, which is the last
      * parameter to the this method.
      *
-     * <p>In contrast to the {@link #call(int, XdrAble, XdrAble) method,
+     * <p>In contrast to the {@link #call(int, XdrAble, XdrAble)} method,
      * <code>broadcastCall</code> will only send the ONC/RPC call once. It
      * will then wait for answers until the timeout as set by
      * {@link #setTimeout(int)} expires without resending the reply.

@@ -27,7 +27,6 @@ package org.acplt.oncrpc.ant;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import org.acplt.oncrpc.apps.jrpcgen.jrpcgen;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;

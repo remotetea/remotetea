@@ -26,9 +26,6 @@ package org.acplt.oncrpc.apps.jportmap;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Vector;
-
 import org.acplt.oncrpc.*;
 import org.acplt.oncrpc.server.*;
 

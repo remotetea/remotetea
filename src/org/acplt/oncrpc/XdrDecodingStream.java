@@ -187,7 +187,7 @@ public abstract class XdrDecodingStream {
      * the exact length in advance. The decoded data is always padded to be
      * a multiple of four (because that's what the sender does).
      *
-     * @result The byte vector containing the decoded data.
+     * @return The byte vector containing the decoded data.
      *
      * @throws OncRpcException if an ONC/RPC error occurs.
      * @throws IOException if an I/O error occurs.

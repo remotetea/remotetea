@@ -24,7 +24,6 @@
 
 package org.acplt.oncrpc;
 
-import java.io.IOException;
 import java.net.*;
 import java.lang.reflect.*;
 
@@ -49,7 +48,7 @@ import java.lang.reflect.*;
  *   <li>getSoTimeout() / setSoTimeout()
  * </ul>
  *
- * @version: $
+ * @version $Header$
  * @author Harald Albrecht
  */
 public class OncRpcUdpSocketHelper {

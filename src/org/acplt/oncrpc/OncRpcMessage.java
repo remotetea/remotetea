@@ -24,8 +24,6 @@
 
 package org.acplt.oncrpc;
 
-import java.io.IOException;
-
 /**
  * The <code>OncRpcMessage</code> class is an abstract superclass for all
  * the message types ONC/RPC defines (well, an overwhelming count of two).

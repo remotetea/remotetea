@@ -24,8 +24,6 @@
 
 package org.acplt.oncrpc;
 
-import java.io.IOException;
-
 /**
  * The <code>OncRpcCallMessage</code> class represents a remote procedure call
  * message as defined by ONC/RPC in RFC 1831. Such messages are sent by ONC/RPC
