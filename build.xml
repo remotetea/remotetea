@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!--
+  $Header$
+  
+  build.xml - contains the ANT rules for building Remote Tea
+  
+  -->
+
+<project name="Remote Tea" default="jar" basedir=".">
+
+	<!-- -->
+	<property name="buildDir" value="classes" />
+	<property name="srcDir" value="src" />
+	<property name="docDir" value="doc" />
+
+	<!-- -->
+
+	<!-- Generate JAR files:
+	     * oncrpc.jar contains the ONC/RPC client and server functionality,
+	     * jrpcgen.jar contains the x-file protocol compiler,
+	     * jportmap.jar contains an ONC/RPC portmapper including base libraries
+	       (so older JREs have no problems executing it standalone).
+	  -->
+	<target name="jar" description="generate jar files">
+		<delete file="${buildDir}/oncrpc.jar"/>
+		<jar 
+				jarfile="${buildDir}/oncrpc.jar"
+				basedir="${buildDir}"
+				includes="org/acplt/oncrpc/*.class,org/acplt/oncrpc/server/*.class"
+		/>
+		<delete file="${buildDir}/jrpcgen.jar"/>
+		<jar
+				jarfile="${buildDir}/jrpcgen.jar"
+				basedir="${buildDir}"
+				includes="org/acplt/oncrpc/apps/jrpcgen/**/*.class">
+			<manifest>
+				<attribute name="Main-Class" value="org.acplt.oncrpc.apps.jrpcgen.jrpcgen"/>
+			</manifest>
+		</jar>
+		<delete file="${buildDir}/portmap.jar"/>
+		<jar
+				jarfile="${buildDir}/portmap.jar"
+				basedir="${buildDir}"
+				includes="org/acplt/oncrpc/*.class,org/acplt/oncrpc/server/*.class,org/acplt/oncrpc/apps/jportmap/*.class">
+			<manifest>
+				<attribute name="Main-Class" value="org.acplt.oncrpc.apps.jportmap.jportmap
+"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<!-- Generate JavaDoc -->
+	<target name="javadoc" description="generate JavaDoc documentation files">
+		<delete dir="${docDir}"/>
+		<mkdir dir="${docDir}" />
+		<javadoc
+				sourcepath="${srcDir}"
+				destdir="${docDir}"
+				classpath="${buildDir}"
+				private="true"
+				author="on">
+			<package name="org.acplt.oncrpc" />
+			<package name="org.acplt.oncrpc.server" />
+			<package name="org.acplt.oncrpc.web" />
+			<package name="org.acplt.apps.jrpcgen" />
+			<package name="org.acplt.apps.jportmap" />
+			<package name="org.acplt.apps.ant" />
+		</javadoc>
+	</target>
+
+</project>
+
+<!-- End of build.xml -->
