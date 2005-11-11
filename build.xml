@@ -15,6 +15,18 @@
 	<property name="distDir" value="dist" />
 
 	<!-- -->
+	<!-- ** SF patch #943219: add compile target ** -->
+	<!-- Compile classes -->
+	<target name="compile" description="compile classes">
+		<mkdir dir="${buildDir}"/>
+		<javac
+				srcdir="${srcDir}"
+				destdir="${buildDir}"
+				debug="true"
+				deprecation="true"
+				optimize="true">
+		</javac>
+	</target>
 
 	<!-- Generate JAR files:
 	     * oncrpc.jar contains the ONC/RPC client and server functionality,
@@ -22,7 +34,8 @@
 	     * jportmap.jar contains an ONC/RPC portmapper including base libraries
 	       (so older JREs have no problems executing it standalone).
 	  -->
-	<target name="jar" description="generate jar files">
+	<!-- ** SF patch #943219: add compile target / compile dependency ** -->
+	<target name="jar" description="generate jar files" depends="compile">
 		<delete file="${buildDir}/oncrpc.jar"/>
 		<jar 
 				jarfile="${buildDir}/oncrpc.jar"
@@ -30,10 +43,11 @@
 				includes="org/acplt/oncrpc/*.class,org/acplt/oncrpc/server/*.class"
 		/>
 		<delete file="${buildDir}/jrpcgen.jar"/>
+		<!-- ** SF patch #943215: include Ant task with jrpcgen.jar ** -->
 		<jar
 				jarfile="${buildDir}/jrpcgen.jar"
 				basedir="${buildDir}"
-				includes="org/acplt/oncrpc/apps/jrpcgen/**/*.class">
+				includes="org/acplt/oncrpc/apps/jrpcgen/**/*.class,org/acplt/oncrpc/ant/*.class">
 			<manifest>
 				<attribute name="Main-Class" value="org.acplt.oncrpc.apps.jrpcgen.jrpcgen"/>
 			</manifest>
