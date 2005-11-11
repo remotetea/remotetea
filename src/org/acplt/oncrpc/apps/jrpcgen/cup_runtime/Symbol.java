@@ -38,21 +38,15 @@ public class Symbol {
 ********************************/
 
   public Symbol(int id, Object o) {
-    this(id);
-    left = -1;
-    right = -1;
-    value = o;
+    this(id, -1, -1, o);
   }
 
 /*****************************
   Constructor for no value
   ***************************/
 
-  public Symbol(int sym_num, int l, int r) {
-    sym = sym_num;
-    left = l;
-    right = r;
-    value = null;
+  public Symbol(int id, int l, int r) {
+    this(id, l, r, null);
   }
 
 /***********************************
@@ -69,7 +63,7 @@ public class Symbol {
 /***********************************
   Constructor to give a start state
 ***********************************/
-  public Symbol(int sym_num, int state)
+  Symbol(int sym_num, int state)
     {
       sym = sym_num;
       parse_state = state;

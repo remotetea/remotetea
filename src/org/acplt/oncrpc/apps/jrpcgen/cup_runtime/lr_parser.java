@@ -332,7 +332,8 @@ public abstract class lr_parser {
    *  scan() should return a fresh object.
    */
   public Symbol scan() throws java.lang.Exception {
-    return getScanner().next_token();
+    Symbol sym = getScanner().next_token();
+    return (sym!=null) ? sym : new Symbol(EOF_sym());
   }
 
   /*. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .*/
@@ -869,8 +870,13 @@ public abstract class lr_parser {
 	    }
 
 	  /* otherwise, we consume another Symbol and try again */
+	  // BUG FIX by Bruce Hutton
+	  // Computer Science Department, University of Auckland,
+	  // Auckland, New Zealand.
+	  // It is the first token that is being consumed, not the one 
+	  // we were up to parsing
 	  if (debug) 
-	  debug_message("# Consuming Symbol #" + cur_err_token().sym);
+	      debug_message("# Consuming Symbol #" + lookahead[ 0 ].sym);
 	  restart_lookahead();
 	}
 
@@ -1012,8 +1018,12 @@ public abstract class lr_parser {
 	lookahead[i-1] = lookahead[i];
 
       /* read a new Symbol into the last spot */
-      cur_token = scan();
+      // BUG Fix by Bruce Hutton
+      // Computer Science Department, University of Auckland,
+      // Auckland, New Zealand. [applied 5-sep-1999 by csa]
+      // The following two lines were out of order!!
       lookahead[error_sync_size()-1] = cur_token;
+      cur_token = scan();
 
       /* reset our internal position marker */
       lookahead_pos = 0;

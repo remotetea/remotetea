@@ -14,8 +14,12 @@ package org.acplt.oncrpc.apps.jrpcgen.cup_runtime;
   
   Declares the next_token() method that should be
   implemented by scanners.  This method is typically
-  called by lr_parser.scan().
+  called by lr_parser.scan().  End-of-file can be
+  indicated either by returning
+  <code>new Symbol(lr_parser.EOF_sym())</code> or
+  <code>null</code>.
  ***************************************************/
 public interface Scanner {
+    /** Return the next token, or <code>null</code> on end-of-file. */
     public Symbol next_token() throws java.lang.Exception;
 }
