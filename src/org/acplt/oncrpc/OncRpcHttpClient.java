@@ -586,6 +586,24 @@ public class OncRpcHttpClient extends OncRpcClient {
 		return receivingXdr.getCharacterEncoding();
 	}
 
+	/**
+	 * Returns the host name of the HTTP server we are connected to.
+	 * 
+	 * @return host name.
+	 */
+	public String getHostname() {
+		return hostname;
+	}
+	
+	/**
+	 * Returns the port of the HTTP server we are connected to.
+	 * 
+	 * @return port number.
+	 */
+	public int getHttpPort() {
+		return httpPort;
+	}
+	
     /**
      * DNS name of host where to contact HTTP server. Note that we can not
      * use an <code>InetAddress</code> here as we have to support virtual
