@@ -316,7 +316,20 @@ public class OncRpcTcpClient extends OncRpcClient {
                     // an authentication problem itself, then this will
                     // be handled as any other rejected ONC/RPC call.
                     //
-                    replyHeader.xdrDecode(receivingXdr);
+                    try {
+                    	replyHeader.xdrDecode(receivingXdr);
+                    } catch ( OncRpcException e ) {
+                    	//
+                    	// ** SF bug #1262106 **
+                    	//
+                    	// We ran into some sort of trouble. Usually this will have
+                    	// been a buffer underflow. Whatever, end the decoding process
+                    	// and ensure this way that the next call has a chance to start
+                    	// from a clean state.
+                    	//
+                    	receivingXdr.endDecoding();
+                    	throw(e);
+                    }
                     //
                     // Only deserialize the result, if the reply matches the
                     // call. Otherwise skip this record.
@@ -352,7 +365,20 @@ public class OncRpcTcpClient extends OncRpcClient {
                     //
                     throw(replyHeader.newException());
                 }
-                result.xdrDecode(receivingXdr);
+                try {
+                	result.xdrDecode(receivingXdr);
+                } catch ( OncRpcException e ) {
+                	//
+                	// ** SF bug #1262106 **
+                	//
+                	// We ran into some sort of trouble. Usually this will have
+                	// been a buffer underflow. Whatever, end the decoding process
+                	// and ensure this way that the next call has a chance to start
+                	// from a clean state.
+                	//
+                	receivingXdr.endDecoding();
+                	throw(e);
+                }
                 //
                 // Free pending resources of buffer and exit the call loop,
                 // returning the reply to the caller through the result
