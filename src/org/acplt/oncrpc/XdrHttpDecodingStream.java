@@ -77,7 +77,6 @@ public class XdrHttpDecodingStream extends XdrDecodingStream {
         int asciiBufferSize = lines * HttpTunnelConstants.ENCODED_BYTES_PER_LINE_CRLF;
 
         buffer = new byte[bufferSize];
-        this.bufferSize = bufferSize;
 
         asciiBuffer = new byte[asciiBufferSize];
         this.asciiBufferSize = asciiBufferSize;
@@ -389,11 +388,6 @@ public class XdrHttpDecodingStream extends XdrDecodingStream {
      * be used to supply the information when decoding data.
      */
     private byte [] buffer;
-
-    /**
-     *
-     */
-    private int bufferSize;
 
     /**
      * The buffer receiving base64 encoded plain ASCII data from a HTTP web
