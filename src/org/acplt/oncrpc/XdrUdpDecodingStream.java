@@ -226,8 +226,6 @@ public class XdrUdpDecodingStream extends XdrDecodingStream {
      * @param offset Start offset in the byte vector.
      * @param length the number of bytes to decode.
      *
-     * @return The number of opaque bytes read.
-     *
      * @throws OncRpcException if an ONC/RPC error occurs.
      * @throws IOException if an I/O error occurs.
      */
