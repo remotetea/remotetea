@@ -62,6 +62,7 @@ public class jrpcgen {
         System.out.println("  -p <package>    specify package name for generated source code files");
         System.out.println("  -s <classname>  specify class name of server proxy stub");
         System.out.println("  -ser            tag generated XDR classes as serializable");
+        System.out.println("  -bean           generate accessors for usage as bean, implies -ser");
         System.out.println("  -noclamp        do not clamp version number in client method stubs");
         System.out.println("  -withcallinfo   supply call information to server method stubs");
         System.out.println("  -initstrings    initialize all strings to be empty instead of null");
@@ -80,7 +81,7 @@ public class jrpcgen {
     /**
      * Current version of jrpcgen.
      */
-    public static final String VERSION = "1.0.5";
+    public static final String VERSION = "1.0.6";
 
     /**
      * A remote procedure has no parameters and thus needs to use the
@@ -226,6 +227,11 @@ public class jrpcgen {
      */
     public static boolean makeSerializable = false;
 
+    /**
+     * Enable generation of accessors in order to use XDR classes as beans.
+     */
+    public static boolean makeBean = false;
+    
     /**
      * Enable automatic initialization of String with empty Strings
      * instead of null reference.
@@ -957,6 +963,40 @@ public class jrpcgen {
             out.println();
             out.println("    private static final long serialVersionUID = "
                         + hash.getHash() + "L;");
+
+            if ( makeBean ) {
+            	//
+            	// Also generate accessors (getters and setters) so that
+            	// class can be used as a bean.
+            	//
+            	decls = s.elements.elements();
+            	while ( decls.hasMoreElements() ) {
+                	out.println();
+            		JrpcgenDeclaration d = (JrpcgenDeclaration) decls.nextElement();
+            		String jbName = d.identifier.substring(0,1).toUpperCase() + d.identifier.substring(1);
+            		boolean isArray = (((d.kind == JrpcgenDeclaration.FIXEDVECTOR)
+                                 	   || (d.kind == JrpcgenDeclaration.DYNAMICVECTOR))
+                                      && !d.type.equals("String") );
+            		//
+            		// Generate the setter(s)
+            		//
+            		if ( isArray ) {
+            			out.println("    public void set" + jbName + "(" + checkForSpecials(d.type) + "[] x) { this." + d.identifier + " = x; }");
+            			out.println("    public void set" + jbName + "(int index, " + checkForSpecials(d.type) + " x) { this." + d.identifier + "[index] = x; }");
+            		} else {
+            			out.println("    public void set" + jbName + "(" + checkForSpecials(d.type) + " x) { this." + d.identifier + " = x; }");
+            		}
+            		//
+            		// Generate the getter(s)
+            		//
+            		if ( isArray ) {
+            			out.println("    public " + checkForSpecials(d.type) + "[] get" + jbName + "() { return this." + d.identifier + "; }");
+            			out.println("    public " + checkForSpecials(d.type) + " get" + jbName + "(int index) { return this." + d.identifier + "[index]; }");
+            		} else {
+            			out.println("    public " + checkForSpecials(d.type) + " get" + jbName + "() { return this." + d.identifier + "; }");
+            		}
+            	}
+            }
         }
 
         //
@@ -2274,6 +2314,9 @@ public class jrpcgen {
                 serverClass = args[argIdx];
             } else if ( arg.equals("-ser") ) {
                 makeSerializable = true;
+            } else if ( arg.equals("-bean") ) {
+                makeSerializable = true;
+                makeBean = true;
             } else if ( arg.equals("-initstrings") ) {
                 initStrings = true;
             } else if ( arg.equals("-noclamp") ) {
