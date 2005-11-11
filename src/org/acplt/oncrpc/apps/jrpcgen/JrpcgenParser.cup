@@ -138,6 +138,7 @@ non terminal JrpcgenUnionArm      union_case;
 non terminal                      typedef_def;
 
 non terminal Vector               program_defs;
+non terminal                      program_defs_opt;
 non terminal JrpcgenProgramInfo   program_def;
 non terminal Vector               version_defs;
 non terminal JrpcgenVersionInfo   version_def;
@@ -168,12 +169,22 @@ start with compilation_unit;
 // all necessary information in its static variable members to generate the
 // various source code files.
 //
+// ** SF patch #1159721: add possibility to generate from .x file without program def **
 compilation_unit ::=
-        definitions_opt program_defs:progDefs
+        definitions_opt program_defs_opt
+        ;
+
+program_defs_opt ::=
+		/* empty */
+			{:
+				jrpcgen.programInfos = new Vector();
+			:}
+		|
+		program_defs:progDefs
             {:
                 jrpcgen.programInfos = progDefs;
             :}
-        ;
+		;
 
 program_defs ::=
         program_def:progDef
