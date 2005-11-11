@@ -34,6 +34,11 @@ package org.acplt.oncrpc;
 public class OncRpcProgramNotRegisteredException extends OncRpcException {
 
     /**
+	 * Defines the serial version UID for <code>OncRpcProgramNotRegisteredException</code>.
+	 */
+	private static final long serialVersionUID = 5073156463000368270L;
+
+	/**
      * Constructs an ONC/RPC program not registered exception with a detail
      * code of <code>OncRpcException.RPC_PROGNOTREGISTERED</code> and an
      * appropriate clear-text detail message.

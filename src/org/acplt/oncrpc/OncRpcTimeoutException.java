@@ -34,6 +34,11 @@ package org.acplt.oncrpc;
 public class OncRpcTimeoutException extends OncRpcException {
 
     /**
+	 * Defines the serial version UID for <code>OncRpcTimeoutException</code>.
+	 */
+	private static final long serialVersionUID = 2777518173161399732L;
+
+	/**
      * Initializes an <code>OncRpcTimeoutException</code>
      * with a detail of {@link OncRpcException#RPC_TIMEDOUT}.
      */

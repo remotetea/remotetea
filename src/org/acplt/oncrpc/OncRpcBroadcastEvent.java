@@ -44,6 +44,11 @@ import java.net.InetAddress;
 public class OncRpcBroadcastEvent extends EventObject {
 
     /**
+	 * Defines the serial version UID for <code>OncRpcBroadcastEvent</code>.
+	 */
+	private static final long serialVersionUID = 1604512454490873965L;
+
+	/**
      * Creates a new <code>KscPackageUpdateEvent</code> object and
      * initializes its state.
      *

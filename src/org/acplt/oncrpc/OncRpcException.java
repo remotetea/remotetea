@@ -46,6 +46,11 @@ package org.acplt.oncrpc;
 public class OncRpcException extends Exception {
 
     /**
+	 * Defines the serial version UID for <code>OncRpcException</code>.
+	 */
+	private static final long serialVersionUID = -2170017056632137324L;
+
+	/**
      * Constructs an <code>OncRpcException</code> with a reason of
      * {@link OncRpcException#RPC_FAILED}.
      */

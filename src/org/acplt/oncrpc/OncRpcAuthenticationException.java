@@ -34,6 +34,11 @@ package org.acplt.oncrpc;
 public class OncRpcAuthenticationException extends OncRpcException {
 
     /**
+	 * Defines the serial version UID for <code>OncRpcAuthenticationException</code>.
+	 */
+	private static final long serialVersionUID = 7747394107888423440L;
+
+	/**
      * Initializes an <code>OncRpcAuthenticationException</code>
      * with a detail of {@link OncRpcException#RPC_AUTHERROR} and
      * the specified {@link OncRpcAuthStatus authentication status} detail.
