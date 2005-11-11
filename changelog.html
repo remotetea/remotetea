@@ -17,6 +17,40 @@ $Revision$ $Date$ $State$ $Locker$</p>
 <p><a class="ext" href="http://remotetea.sourceforge.net">Remote Tea
 Project Home Page</a> on SourceForge.</p>
 
+<h2>Version 1.0.4:</h2>
+
+<p>It has been a long time since the previous release ... but yes, I finally
+managed to pick up the patches sent and rolled them into the new release. Many
+things changed in the meantime so I'm glad I got this release out of the door at
+all. My new employer throws all kind of really interesting tasks at me, so
+RemoteTea is now a really low profile project to me. If volunteers will step forward
+to maintain RemoteTea I would be glad to welcome them aboard the RemoteTea
+project.
+
+<ul>
+
+  <li><span>Added a new option <b><code>-bean</code></b> to <code>jrpcgen</code>
+  for generating accessors (setters and getters)
+  for all elements in a structure. Option <code>-bean</code> also implies
+  <code>-ser</code>. This feature bases on a patch from Ralph Neff.</span></li>
+
+  <li><span><code>jrpcgen</code> now also accepts .x files without a
+  program section. In this case no stub classes are generated, but 
+  Java source code files for all structures, enums, et cetera are still
+  generated. This feature bases on a patch from Bialas Krzysztof.</span></li>
+
+  <li><span>Updated to new CPU runtime, see also the
+  <a href="http://www2.cs.tum.edu/projects/cup/">CUP LALR Parser Generator in
+  Java Version 11 at TU Munich</a>.</span></li>
+
+  <li><span>Incorporated patches for: compile target in Ant build file, include Ant
+  task in <code>jrpcgen.jar</code>.</span></li>
+
+  <li><span>Thank you all who sent in patches!</span></li>
+
+</ul>
+
+
 <h2>Version 1.0.3:</h2>
 
 <p>This release marks my movement from the website of the good old
