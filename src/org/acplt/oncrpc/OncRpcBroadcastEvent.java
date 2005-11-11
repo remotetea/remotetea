@@ -88,6 +88,24 @@ public class OncRpcBroadcastEvent extends EventObject {
     }
 
     /**
+     * Returns the number of the remote procedure called.
+     * 
+     * @return procedure number.
+     */
+    public int getProcedureNumber() {
+    	return procedureNumber;
+    }
+    
+    /**
+     * Returns the parameter message sent in a broadcast RPC.
+     * 
+     * @return parameter message object.
+     */
+    public XdrAble getParams() {
+    	return params;
+    }
+    
+    /**
      * Contains the address of the sender of the ONC/RPC reply message.
      *
      * @serial
