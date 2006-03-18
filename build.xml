@@ -98,6 +98,7 @@
 				<include name="changelog.html" />
 				<include name="docstyle.css" />
 				<include name="COPYING.LIB" />
+				<include name="build.xml" />
 			</zipfileset>
 		</zip>
 		<!-- source only distribution -->
