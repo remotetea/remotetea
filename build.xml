@@ -117,6 +117,49 @@
 		</zip>
 	</target>
 
+	<!-- compile Jrpcgen test example and compile resulting Java files -->
+	<target name="jrpcgen-test" description="run jrpcgen test">
+		<echo>Cleaning up example mess...</echo>
+		<delete><!-- make a fresh start so we don't get bitten by damaged example source code -->
+			<fileset dir="${srcDir}/tests/org/acplt/oncrpc/jrpcgen"
+				     includes="*.java"
+			         excludes="demoClientExample.java demoServer.java"/>
+		</delete>
+		<echo>Compiling Jrpcgen protocol compiler...</echo>
+		<antcall target="compile"></antcall>
+		<echo>Running Jrpcgen x protocol compiler on demo.x...</echo>
+		<java classname="org.acplt.oncrpc.apps.jrpcgen.jrpcgen"
+		      classpath="${buildDir}"
+			  dir="${srcDir}/tests/org/acplt/oncrpc/jrpcgen"
+			  fork="yes">
+			<arg value="-verbose"/>
+			<arg value="-p"/>
+			<arg value="tests.org.acplt.oncrpc.jrpcgen"/>
+			<arg value="-nobackup"/>
+			<arg value="demo.x"/>
+		</java>
+		<echo>Running Jrpcgen x protocol compiler on demo2.x...</echo>
+		<java classname="org.acplt.oncrpc.apps.jrpcgen.jrpcgen"
+		      classpath="${buildDir}"
+			  dir="${srcDir}/tests/org/acplt/oncrpc/jrpcgen"
+			  fork="yes">
+			<arg value="-verbose"/>
+			<arg value="-p"/>
+			<arg value="tests.org.acplt.oncrpc.jrpcgen"/>
+			<arg value="-nobackup"/>
+			<arg value="demo2.x"/>
+		</java>
+		<echo>Compiling example mess...</echo>
+		<javac
+				srcdir="${srcDir}/tests/org/acplt/oncrpc/jrpcgen"
+				destdir="${buildDir}"
+				debug="true"
+				deprecation="true"
+				optimize="true">
+		</javac>
+		<echo>Succeeded.</echo>
+	</target>
+	
 </project>
 
 <!-- End of build.xml -->
