@@ -17,6 +17,22 @@ $Revision$ $Date$ $State$ $Locker$</p>
 <p><a class="ext" href="http://remotetea.sourceforge.net">Remote Tea
 Project Home Page</a> on SourceForge.</p>
 
+<h2>Version 1.0.5:</h2>
+
+<p>This is a minor update version.
+
+<ul>
+
+  <li><span>Fixed a code generation error in jrpcgen which cause the protocol
+  compiler to emit ONC/RPC server code that did not properly returned errors for
+  unsupported programs.</span></li>
+
+  <li><span>Fixed <code>build.xml</code> Ant script to include also exactly this
+  build file in the source code zip which gets uploaded to Source Forge.</span></li>
+  
+</ul>
+
+
 <h2>Version 1.0.4:</h2>
 
 <p>It has been a long time since the previous release ... but yes, I finally
@@ -524,7 +540,7 @@ out of the door.</p>
   <code>XdrEncodingStream.xdrEncodeByteFixedVector()</code> which
   falsely encoded length information about the following array of
   characters.  I should take more care when doing <code>Italian code
-  recycling</q> using copy &amp; pasta...</span></li>
+  recycling</code> using copy &amp; pasta...</span></li>
 
   <li><span>Fixed bug in <code>OncRpcTcpClient.call()</code> which
   caused XDR buffer underflows when receiving the next reply after the
