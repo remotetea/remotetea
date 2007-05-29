@@ -249,8 +249,13 @@ public class OncRpcUdpClient extends OncRpcClient {
                         int currentTimeout = (int)(stopTime - System.currentTimeMillis());
                         if ( currentTimeout > resendTimeout ) {
                             currentTimeout = resendTimeout;
-                        } else if ( currentTimeout < 0 ) {
-                            currentTimeout = 0;
+                        } else if ( currentTimeout < 1 ) {
+                        	//
+                        	// as setSoTimeout interprets a timeout of zero as
+                        	// infinite (?§$@%&!!!) we need to ensure that we
+                        	// have a finite timeout, albeit maybe an infinitesimal
+                        	// finite one.
+                            currentTimeout = 1;
                         }
                         socket.setSoTimeout(currentTimeout);
                         receivingXdr.beginDecoding();
