@@ -99,6 +99,14 @@ public class demoServer extends demoServerStub {
     }
 
     /**
+     * 
+     */
+    public SOMERESULT readSomeResult_1() {
+    	SOMERESULT res = new SOMERESULT();
+    	return res;
+    }
+    
+    /**
      *
      */
     public String cat_2(String arg1, String arg2) {

@@ -63,6 +63,12 @@ struct SILLYSTRUCT {
     string nonsense<>;
 };
 
+struct SOMERESULT {
+	int error;
+	string typedesc<>;
+	opaque data<>;
+};
+
 program DEMO {
     version FIRST_DEMO_VERSION {
         void NULL(void) = 0;
@@ -71,6 +77,7 @@ program DEMO {
         bool checkfoo(ENUMFOO) = 3;
         ENUMFOO foo(void) = 4;
         LINKEDLIST ll(LINKEDLIST) = 5;
+        SOMERESULT readSomeResult(void) = 42;
     } = 1;
     version SECOND_DEMO_VERSION {
         void NULL(void) = 0;

@@ -7,33 +7,34 @@ package tests.org.acplt.oncrpc.jrpcgen;
 import org.acplt.oncrpc.*;
 import java.io.IOException;
 
-public class STRING implements XdrAble, java.io.Serializable {
+public class SOMERESULT implements XdrAble, java.io.Serializable {
+    public int error;
+    public String typedesc = ""; 
+    public byte [] data;
 
-    public String value;
+    private static final long serialVersionUID = -6867149493429413131L;
 
-    private static final long serialVersionUID = -5513160560686984193L;
-
-    public STRING() {
+    public SOMERESULT() {
     }
 
-    public STRING(String value) {
-        this.value = value;
-    }
-
-    public STRING(XdrDecodingStream xdr)
+    public SOMERESULT(XdrDecodingStream xdr)
            throws OncRpcException, IOException {
         xdrDecode(xdr);
     }
 
     public void xdrEncode(XdrEncodingStream xdr)
            throws OncRpcException, IOException {
-        xdr.xdrEncodeString(value);
+        xdr.xdrEncodeInt(error);
+        xdr.xdrEncodeString(typedesc);
+        xdr.xdrEncodeDynamicOpaque(data);
     }
 
     public void xdrDecode(XdrDecodingStream xdr)
            throws OncRpcException, IOException {
-        value = xdr.xdrDecodeString();
+        error = xdr.xdrDecodeInt();
+        typedesc = xdr.xdrDecodeString();
+        data = xdr.xdrDecodeDynamicOpaque();
     }
 
 }
-// End of STRING.java
+// End of SOMERESULT.java
