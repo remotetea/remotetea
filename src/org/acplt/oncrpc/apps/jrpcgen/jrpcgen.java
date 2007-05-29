@@ -910,11 +910,15 @@ public class jrpcgen {
         // Create new source code file containing a Java class representing
         // the XDR struct.
         //
+        String access = "    public ";	// modify encapsulation with beans
         PrintWriter out = createJavaSourceFile(s.identifier);
 
         out.print("public class " + s.identifier + " implements XdrAble");
         if ( makeSerializable ) {
             out.print(", java.io.Serializable");
+        }
+        if ( makeBean ) {
+        	access = "    protected ";
         }
         out.println(" {");
 
@@ -931,7 +935,7 @@ public class jrpcgen {
             hash.update(d.type);
             hash.update(d.kind);
             hash.update(d.identifier);
-            out.print("    public " + checkForSpecials(d.type) + " ");
+            out.print(access + checkForSpecials(d.type) + " ");
             if ( ((d.kind == JrpcgenDeclaration.FIXEDVECTOR)
                   || (d.kind == JrpcgenDeclaration.DYNAMICVECTOR))
                  && !d.type.equals("String") ) {
