@@ -38,6 +38,12 @@ they are called "x-files" throughout this documentation.
   serializable. Also automatically generates <code>serialVersionUID</code>
   using the SHA-1 algorithm.
   </dd>
+<dt><code>-bean</code></dt>
+  <dd>generate accessors for usage as bean, implies <code>-ser</code>.
+  </dd>
+<dt><code>-noclamp</code></dt>
+  <dd>do not clamp version number in client method stubs.
+  </dd>
 <dt><code>-initstrings</code></dt>
   <dd>automatically initialize all <code>Strings</code> as empty strings ("").
   Note that this may lead to lazy programming; better make explicitly sure
@@ -145,7 +151,8 @@ an ONC/RPC server.</p>
 <a href="../../../../overview-summary.html">Remote Tea Java Library
 package</a>.
 
-<p>(c) 1999 <a href="http://www.plt.rwth-aachen.de/english">Lehrstuhl f&uuml;r
+<p>(c) 1999, 2006 Harald Albrecht.
+<br>(c) 1999 <a href="http://www.plt.rwth-aachen.de/english">Lehrstuhl f&uuml;r
 Proze&szlig;leittechnik</a>, Aachen University of Technology, Germany.
 
 <p>This library is free software; you can redistribute it and/or modify
