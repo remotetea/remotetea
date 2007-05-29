@@ -109,7 +109,7 @@ public class OncRpcUdpSocketHelper {
            throws SocketException {
         if ( methodGetSendBufferSize != null ) {
             try {
-                Object result = methodGetSendBufferSize.invoke(socket, null);
+                Object result = methodGetSendBufferSize.invoke(socket, (Object[]) null);
                 if ( result instanceof Integer ) {
                     return ((Integer) result).intValue();
                 }
@@ -179,7 +179,7 @@ public class OncRpcUdpSocketHelper {
            throws SocketException {
         if ( methodGetReceiveBufferSize != null ) {
             try {
-                Object result = methodGetReceiveBufferSize.invoke(socket, null);
+                Object result = methodGetReceiveBufferSize.invoke(socket, (Object[]) null);
                 if ( result instanceof Integer ) {
                     return ((Integer) result).intValue();
                 }
@@ -211,12 +211,12 @@ public class OncRpcUdpSocketHelper {
         try {
             methodSetSendBufferSize = c.getMethod("setSendBufferSize",
                                              new Class [] {int.class});
-            methodGetSendBufferSize = c.getMethod("getSendBufferSize", null);
+            methodGetSendBufferSize = c.getMethod("getSendBufferSize", (Class[]) null);
         } catch ( Exception e ) { }
         try {
             methodSetReceiveBufferSize = c.getMethod("setReceiveBufferSize",
                                              new Class [] {int.class});
-            methodGetReceiveBufferSize = c.getMethod("getReceiveBufferSize", null);
+            methodGetReceiveBufferSize = c.getMethod("getReceiveBufferSize", (Class[]) null);
         } catch ( Exception e ) { }
     }
 

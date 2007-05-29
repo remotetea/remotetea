@@ -371,7 +371,7 @@ public class OncRpcTcpSocketHelper {
            throws SocketException {
         if ( methodGetSendBufferSize != null ) {
             try {
-                Object result = methodGetSendBufferSize.invoke(socket, null);
+                Object result = methodGetSendBufferSize.invoke(socket, (Object[]) null);
                 if ( result instanceof Integer ) {
                     return ((Integer) result).intValue();
                 }
@@ -441,7 +441,7 @@ public class OncRpcTcpSocketHelper {
            throws SocketException {
         if ( methodGetReceiveBufferSize != null ) {
             try {
-                Object result = methodGetReceiveBufferSize.invoke(socket, null);
+                Object result = methodGetReceiveBufferSize.invoke(socket, (Object[]) null);
                 if ( result instanceof Integer ) {
                     return ((Integer) result).intValue();
                 }
@@ -474,12 +474,12 @@ public class OncRpcTcpSocketHelper {
         try {
             methodSetSendBufferSize = socketClass.getMethod("setSendBufferSize",
                                              new Class [] {int.class});
-            methodGetSendBufferSize = socketClass.getMethod("getSendBufferSize", null);
+            methodGetSendBufferSize = socketClass.getMethod("getSendBufferSize", (Class[]) null);
         } catch ( Exception e ) { }
         try {
             methodSetReceiveBufferSize = socketClass.getMethod("setReceiveBufferSize",
                                              new Class [] {int.class});
-            methodGetReceiveBufferSize = socketClass.getMethod("getReceiveBufferSize", null);
+            methodGetReceiveBufferSize = socketClass.getMethod("getReceiveBufferSize", (Class[]) null);
         } catch ( Exception e ) { }
         // JRE 1.4 specific stuff
         try {
