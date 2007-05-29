@@ -133,6 +133,8 @@
 			  dir="${srcDir}/tests/org/acplt/oncrpc/jrpcgen"
 			  fork="yes">
 			<arg value="-verbose"/>
+			<arg value="-ser"/>
+			<arg value="-bean"/>
 			<arg value="-p"/>
 			<arg value="tests.org.acplt.oncrpc.jrpcgen"/>
 			<arg value="-nobackup"/>
