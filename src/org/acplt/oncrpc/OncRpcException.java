@@ -155,6 +155,9 @@ public class OncRpcException extends Exception {
         case RPC_WRONGMESSAGE:
             message = "wrong ONC/RPC message type received";
             break;
+        case RPC_CANNOTREGISTER:
+        	message = "cannot register ONC/RPC port with local portmap";
+        	break;
 
         case RPC_SUCCESS:
         default:
@@ -279,6 +282,11 @@ public class OncRpcException extends Exception {
      * {@link OncRpcReplyMessage} throw exceptions with this reason.
      */
     public static final int RPC_WRONGMESSAGE = 44;
+    /**
+     * Indicates that a server could not register a transport with the
+     * ONC/RPC port mapper.
+     */
+    public static final int RPC_CANNOTREGISTER = 45;
 
     /**
      * Specific detail (reason) about this <code>OncRpcException</code>,

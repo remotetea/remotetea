@@ -124,6 +124,11 @@ public class OncRpcTcpConnectionServerTransport extends OncRpcServerTransport {
         //
         sendingXdr = new XdrTcpEncodingStream(socket, bufferSize);
         receivingXdr = new XdrTcpDecodingStream(socket, bufferSize);
+        //
+        // Inherit the character encoding setting from the listening
+        // transport (parent transport).
+        //
+        setCharacterEncoding(parent.getCharacterEncoding());
     }
 
     /**

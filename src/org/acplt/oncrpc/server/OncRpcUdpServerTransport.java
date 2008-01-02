@@ -212,8 +212,14 @@ public class OncRpcUdpServerTransport extends OncRpcServerTransport {
                 new OncRpcPortmapClient(InetAddress.getByName("127.0.0.1"));
             int size = info.length;
             for ( int idx = 0; idx < size; ++idx ) {
-                portmapper.setPort(info[idx].program, info[idx].version,
-                                   OncRpcProtocols.ONCRPC_UDP, port);
+            	//
+            	// Try to register the port for our transport with the local ONC/RPC
+            	// portmapper. If this fails, bail out with an exception.
+            	//
+                if ( !portmapper.setPort(info[idx].program, info[idx].version,
+                                   OncRpcProtocols.ONCRPC_UDP, port) ) {
+                	throw(new OncRpcException(OncRpcException.RPC_CANNOTREGISTER));
+                }
             }
         } catch ( IOException e ) {
             throw(new OncRpcException(OncRpcException.RPC_FAILED));
