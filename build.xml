@@ -13,6 +13,8 @@
 	<property name="srcDir" value="src" />
 	<property name="javadocDir" value="javadoc" />
 	<property name="distDir" value="dist" />
+	
+	<property name="distVersion" value="1.0.8" />
 
 	<!-- -->
 	<!-- ** SF patch #943219: add compile target ** -->
@@ -40,8 +42,17 @@
 		<jar 
 				jarfile="${buildDir}/oncrpc.jar"
 				basedir="${buildDir}"
-				includes="org/acplt/oncrpc/*.class,org/acplt/oncrpc/server/*.class"
-		/>
+				includes="org/acplt/oncrpc/*.class,org/acplt/oncrpc/server/*.class">
+			<manifest>
+				<attribute name="Extension-Name" value="ONC/RPC"/>
+				<attribute name="Specification-Title" value="Open Network Computing Remote Procedure Call (core)"/> 
+				<attribute name="Specification-Version" value="2.0"/> 
+				<attribute name="Specification-Vendor" value="Sun Microsystems, Inc"/> 
+				<attribute name="Implementation-Title" value="Open Network Computing Remote Procedure Call (core)"/> 
+				<attribute name="Implementation-Version" value="${distVersion}"/>  
+				<attribute name="Implementation-Vendor" value="RemoteTea SF Project"/> 
+			</manifest>
+		</jar>
 		<delete file="${buildDir}/jrpcgen.jar"/>
 		<!-- ** SF patch #943215: include Ant task with jrpcgen.jar ** -->
 		<jar
@@ -50,6 +61,13 @@
 				includes="org/acplt/oncrpc/apps/jrpcgen/**/*.class,org/acplt/oncrpc/ant/*.class">
 			<manifest>
 				<attribute name="Main-Class" value="org.acplt.oncrpc.apps.jrpcgen.jrpcgen"/>
+				<attribute name="Extension-Name" value="ONC/RPC"/>
+				<attribute name="Specification-Title" value="Open Network Computing Remote Procedure Call (rpcgen)"/> 
+				<attribute name="Specification-Version" value="unknown (rpcgen x.x)"/> 
+				<attribute name="Specification-Vendor" value="Sun Microsystems, Inc"/> 
+				<attribute name="Implementation-Title" value="Open Network Computing Remote Procedure Call (rpcgen)"/> 
+				<attribute name="Implementation-Version" value="${distVersion}"/>  
+				<attribute name="Implementation-Vendor" value="RemoteTea SF Project"/> 
 			</manifest>
 		</jar>
 		<delete file="${buildDir}/portmap.jar"/>
@@ -58,8 +76,14 @@
 				basedir="${buildDir}"
 				includes="org/acplt/oncrpc/*.class,org/acplt/oncrpc/server/*.class,org/acplt/oncrpc/apps/jportmap/*.class">
 			<manifest>
-				<attribute name="Main-Class" value="org.acplt.oncrpc.apps.jportmap.jportmap
-"/>
+				<attribute name="Main-Class" value="org.acplt.oncrpc.apps.jportmap.jportmap"/>
+				<attribute name="Extension-Name" value="ONC/RPC"/>
+				<attribute name="Specification-Title" value="Open Network Computing Remote Procedure Call (rpcbind)"/> 
+				<attribute name="Specification-Version" value="2.0"/> 
+				<attribute name="Specification-Vendor" value="Sun Microsystems, Inc"/> 
+				<attribute name="Implementation-Title" value="Open Network Computing Remote Procedure Call (rpcbind)"/> 
+				<attribute name="Implementation-Version" value="${distVersion}"/>  
+				<attribute name="Implementation-Vendor" value="RemoteTea SF Project"/> 
 			</manifest>
 		</jar>
 	</target>
@@ -86,6 +110,7 @@
 	<!-- Generate SF file packages -->
 	<target name="sf" description="generate SF file packages"
 		    depends="jar,javadoc">
+		<echo>generating SF file packages for version ${distVersion}...</echo>
 		<mkdir dir="${distDir}"/>
 		<!-- binary plus documentation distribution -->
 		<zip zipfile="${distDir}/remotetea-bin-doc.zip">
